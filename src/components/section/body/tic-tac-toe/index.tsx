@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Board from "./board";
+import Left from "./left";
 import { CARD_CLASS } from "@/app/const";
 
 export default function TicTacToe() {
@@ -46,7 +46,7 @@ export default function TicTacToe() {
 
   return (
     <div className="grid grid-cols-2 gap-2">
-      <Board
+      <Left
         xIsNext={xIsNext}
         squares={currentSquares}
         onPlay={handlePlay}
