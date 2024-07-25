@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "engines": {
+    "node": "20.16.0"
+  },
   "dependencies": {
     "framer-motion": "^11.3.9",
     "next": "14.2.5",
