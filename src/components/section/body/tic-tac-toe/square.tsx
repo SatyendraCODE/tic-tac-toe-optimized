@@ -11,7 +11,7 @@ export type SquareProps = {
   oSelectedColor: string;
 };
 
-const CLASS_NAME = "w-20 h-20 border border-gray-500 rounded-lg";
+const CLASS_NAME = "w-20 h-20 cursor-pointer border border-gray-500 rounded-lg";
 
 export default function Square({
   value,
