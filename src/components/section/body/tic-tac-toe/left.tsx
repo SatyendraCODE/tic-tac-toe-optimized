@@ -15,6 +15,7 @@ type BoardProps = {
   squares: string[];
   onPlay: (squares: string[]) => void;
   calculateWinner: (squares: string[]) => string | null;
+  boardEffect: boolean;
 };
 
 const CLASS_NAME = "w-5 h-5 rounded-full";
@@ -24,6 +25,7 @@ export default function Left({
   squares,
   onPlay,
   calculateWinner,
+  boardEffect,
 }: BoardProps) {
   const [xSelectedColor, setXSelectedColor] = React.useState(
     COLORS_VARIANTS[1]
@@ -31,8 +33,6 @@ export default function Left({
   const [oSelectedColor, setOSelectedColor] = React.useState(
     COLORS_VARIANTS[2]
   );
-
-  const [boardEffect, setBoardEffect] = React.useState(false);
 
   function handleClick(i: number) {
     if (calculateWinner(squares) || squares[i]) {
@@ -106,8 +106,6 @@ export default function Left({
           colorVariants={colorVariants}
           onClick={(color: string) => setOSelectedColor(color)}
         />
-
-        <BoardEffectSelector boardEffectState={[boardEffect, setBoardEffect]} />
       </div>
     </>
   );

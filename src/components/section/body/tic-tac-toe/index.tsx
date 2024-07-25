@@ -1,12 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Left from "./left";
 import { CARD_CLASS } from "@/app/const";
+import BoardEffectSelector from "./board-effect-selector";
+import { triggerConfetti } from "@/components/ui/confetti";
 
 export default function TicTacToe() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
+  const [boardEffect, setBoardEffect] = useState(false);
+
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
@@ -38,6 +42,7 @@ export default function TicTacToe() {
   let status;
   if (winner) {
     status = "Winner: " + winner;
+    triggerConfetti();
   } else {
     status = "Next player: " + (xIsNext ? "X" : "O");
   }
@@ -51,13 +56,17 @@ export default function TicTacToe() {
         squares={currentSquares}
         onPlay={handlePlay}
         calculateWinner={calculateWinner}
+        boardEffect={boardEffect}
       />
+
       <div className=" flex flex-col gap-2">
         <div className={CARD_CLASS}>{status}</div>
 
         <div className={movesClassName}>
           <ol>{moves}</ol>
         </div>
+
+        <BoardEffectSelector boardEffectState={[boardEffect, setBoardEffect]} />
       </div>
     </div>
   );
