@@ -7,7 +7,6 @@ const TitleHeader = () => {
   return (
     <TypewriterEffect
       words={"Tic Tac Toe Game !".split(" ").map((text) => ({ text }))}
-      className="font-thin"
     />
   );
 };
