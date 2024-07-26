@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
 import Left from "./left";
-import { CARD_CLASS } from "@/app/const";
-import BoardEffectSelector from "./board-effect-selector";
 import { triggerConfetti } from "@/components/ui/confetti";
+import Right from "./right";
+import ShinyButton from "@/components/ui/shine-button";
 
 export default function TicTacToe() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
@@ -24,33 +25,63 @@ export default function TicTacToe() {
     setCurrentMove(nextMove);
   }
 
-  const moves = history.map((squares, move) => {
-    let description;
-    if (move > 0) {
-      description = "Go to move #" + move;
+  const status = useMemo(() => {
+    const winner = calculateWinner(currentSquares);
+    let status;
+    if (winner) {
+      status = "Winner is " + winner;
+      triggerConfetti();
     } else {
-      description = "Go to game start";
+      status = "Next player --> " + (xIsNext ? "X" : "O");
     }
-    return (
-      <li key={move}>
-        <button onClick={() => jumpTo(move)}>{description}</button>
-      </li>
-    );
-  });
+    return { win: !!winner, message: status };
+  }, [currentSquares, xIsNext]);
 
-  const winner = calculateWinner(currentSquares);
-  let status;
-  if (winner) {
-    status = "Winner: " + winner;
-    triggerConfetti();
-  } else {
-    status = "Next player: " + (xIsNext ? "X" : "O");
-  }
+  const moves = useMemo(
+    () =>
+      history.map((squares, move) => {
+        let description;
 
-  const movesClassName = `${CARD_CLASS} h-full`;
+        if (move === history.length - 1 && status.win) {
+          description = "Game over";
+        } else if (move > 0) {
+          description = "Go to move #" + move;
+        } else {
+          description = "Start";
+        }
+
+        return (
+          <li key={`${move}-x-$${move}`} className="mb-1.5 ">
+            {move === currentMove ? (
+              <motion.button
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.8 }}
+                className="w-full"
+                onClick={() => jumpTo(move)}
+              >
+                <ShinyButton
+                  text={status.win ? description : `Move #${move} selected`}
+                  className="w-full h-full px-3 rounded-md shadow-md"
+                />
+              </motion.button>
+            ) : (
+              <motion.button
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.8 }}
+                className="w-full h-full border px-3 rounded-md bg-slate-200 dark:bg-gray-900 shadow-md"
+                onClick={() => jumpTo(move)}
+              >
+                {description}
+              </motion.button>
+            )}
+          </li>
+        );
+      }),
+    [currentMove, history, status.win]
+  );
 
   return (
-    <div className="grid grid-cols-2 gap-2">
+    <div className="grid grid-cols-2 gap-2 ">
       <Left
         xIsNext={xIsNext}
         squares={currentSquares}
@@ -59,15 +90,11 @@ export default function TicTacToe() {
         boardEffect={boardEffect}
       />
 
-      <div className=" flex flex-col gap-2">
-        <div className={CARD_CLASS}>{status}</div>
-
-        <div className={movesClassName}>
-          <ol>{moves}</ol>
-        </div>
-
-        <BoardEffectSelector boardEffectState={[boardEffect, setBoardEffect]} />
-      </div>
+      <Right
+        status={status}
+        moves={moves}
+        boardEffectState={[boardEffect, setBoardEffect]}
+      />
     </div>
   );
 }
@@ -83,8 +110,8 @@ function calculateWinner(squares: string[]) {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
+  for (const element of lines) {
+    const [a, b, c] = element;
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       return squares[a];
     }

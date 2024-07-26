@@ -1,13 +1,13 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import React, {
   createContext,
   useState,
   useContext,
   useRef,
   useEffect,
+  useMemo,
 } from "react";
 
 const MouseEnterContext = createContext<
@@ -47,8 +47,14 @@ export const CardContainer = ({
     setIsMouseEntered(false);
     containerRef.current.style.transform = `rotateY(0deg) rotateX(0deg)`;
   };
+
+  const value: [
+    isMouseEntered: boolean,
+    setIsMouseEntered: React.Dispatch<React.SetStateAction<boolean>>
+  ] = useMemo(() => [isMouseEntered, setIsMouseEntered], [isMouseEntered]);
+
   return (
-    <MouseEnterContext.Provider value={[isMouseEntered, setIsMouseEntered]}>
+    <MouseEnterContext.Provider value={value}>
       <td
         className={cn("flex items-center justify-center", containerClassName)}
         style={{

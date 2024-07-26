@@ -8,6 +8,11 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "engines": {
+    "node": ">=20.16.0",
+    "bun": "~1.1.20",
+    "yarn": "~1.22.19"
+  },
   "dependencies": {
     "@radix-ui/react-dropdown-menu": "^2.1.1",
     "@radix-ui/react-slot": "^1.1.0",
