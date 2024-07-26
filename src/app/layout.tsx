@@ -3,7 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { TIC_TAC_TOE } from "./const";
 import { ThemeProvider } from "@/components/theme-provider";
-import { ThemeModeToggle } from "@/components/theme-mode-toggle";
+import RetroGrid from "@/components/ui/retro-grid";
+import GridPattern from "@/components/ui/grid-pattern";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+        <RetroGrid />
       </body>
     </html>
   );

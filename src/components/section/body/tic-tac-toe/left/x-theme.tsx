@@ -1,17 +1,22 @@
-import { CARD_CLASS, COLORS_VARIANTS } from "@/app/const";
+import { CARD_CLASS, COLORS_VARIANTS, COLORS_VARIANTS_HSL } from "@/app/const";
+import { CoolMode } from "@/components/ui/base-partical";
 import React from "react";
 
-export default function XTheme({colorVariants,onClick, selectedColor}: any) {
+export default function XTheme({ colorVariants, onClick, selectedColor }: any) {
   return (
     <div className={CARD_CLASS}>
       <div className="flex items-center gap-1.5">
         <p>X -</p>
         {COLORS_VARIANTS.map((color, index) => (
-          <button
-            key={index}
-            className={colorVariants(color, selectedColor)}
-            onClick={() => onClick(color)}
-          />
+          <CoolMode
+            key={`${color}-${index}`}
+            options={{ color: COLORS_VARIANTS_HSL?.[color] }}
+          >
+            <button
+              className={colorVariants(color, selectedColor)}
+              onClick={() => onClick(color)}
+            />
+          </CoolMode>
         ))}
       </div>
     </div>
