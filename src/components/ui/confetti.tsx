@@ -123,25 +123,25 @@ function ConfettiButton({ options, children, ...props }: ConfettiButtonProps) {
 
 function triggerConfetti() {
   const end = Date.now() + 3 * 1000; // 3 seconds
-  const colors = ["#a786ff", "#fd8bbc", "#eca184", "#f8deb1"];
+  const colors = ["#a786ff", "#fd8bbc", "#eca184", "#1eb8f0"];
 
   const frame = () => {
     if (Date.now() > end) return;
 
     confetti({
-      particleCount: 2,
+      particleCount: 4,
       angle: 60,
       spread: 55,
-      startVelocity: 60,
-      origin: { x: 0, y: 0.5 },
+      startVelocity: 70,
+      origin: { x: 0, y: 1 },
       colors: colors,
     });
     confetti({
-      particleCount: 2,
+      particleCount: 4,
       angle: 120,
       spread: 55,
-      startVelocity: 60,
-      origin: { x: 1, y: 0.5 },
+      startVelocity: 70,
+      origin: { x: 1, y: 1},
       colors: colors,
     });
 
