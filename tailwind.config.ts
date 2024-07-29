@@ -89,6 +89,13 @@ const config = {
             "background-position": "0% 0%",
           },
         },
+        wiggle: {
+          "0%": { transform: "rotate(-30deg)" },
+          "8%": { transform: "rotate(30deg)" },
+          "16%": { transform: "rotate(-30deg)" },
+          "24%": { transform: "rotate(25deg)" },
+          "32%,100%": { transform: "rotate(0deg)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -125,4 +132,3 @@ const config = {
 } satisfies Config;
 
 export default config;
-

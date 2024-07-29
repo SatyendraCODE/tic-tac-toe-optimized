@@ -7,6 +7,12 @@ import { triggerConfetti } from "@/components/ui/confetti";
 import Right from "./right";
 import ShinyButton from "@/components/ui/shine-button";
 
+export type WinnerDataType = {
+  player: string;
+  won: boolean;
+  squares: number[];
+};
+
 export default function TicTacToe() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
@@ -27,14 +33,14 @@ export default function TicTacToe() {
 
   const status = useMemo(() => {
     const winner = calculateWinner(currentSquares);
-    let status;
+    let message;
     if (winner) {
-      status = "Winner is " + winner;
+      message = "Winner is " + winner.player;
       triggerConfetti();
     } else {
-      status = "Next player --> " + (xIsNext ? "X" : "O");
+      message = "Next player --> " + (xIsNext ? "X" : "O");
     }
-    return { win: !!winner, message: status };
+    return { winner: winner, message: message };
   }, [currentSquares, xIsNext]);
 
   const moves = useMemo(
@@ -42,7 +48,7 @@ export default function TicTacToe() {
       history.map((squares, move) => {
         let description;
 
-        if (move === history.length - 1 && status.win) {
+        if (move === history.length - 1 && status.winner?.won) {
           description = "Game over";
         } else if (move > 0) {
           description = "Go to move #" + move;
@@ -63,7 +69,7 @@ export default function TicTacToe() {
                   >
                     <ShinyButton
                       text={
-                        status.win || move === 0
+                        status.winner?.won || move === 0
                           ? description
                           : `Move #${move} selected`
                       }
@@ -85,7 +91,7 @@ export default function TicTacToe() {
           </li>
         );
       }),
-    [currentMove, history, status.win]
+    [currentMove, history, status.winner?.won]
   );
 
   return (
@@ -94,7 +100,7 @@ export default function TicTacToe() {
         xIsNext={xIsNext}
         squares={currentSquares}
         onPlay={handlePlay}
-        calculateWinner={calculateWinner}
+        winnerData={status.winner}
         boardEffect={boardEffect}
       />
 
@@ -107,7 +113,7 @@ export default function TicTacToe() {
   );
 }
 
-function calculateWinner(squares: string[]) {
+function calculateWinner(squares: string[]): WinnerDataType | null {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -121,7 +127,11 @@ function calculateWinner(squares: string[]) {
   for (const element of lines) {
     const [a, b, c] = element;
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return {
+        player: squares[a],
+        won: true,
+        squares: element,
+      };
     }
   }
   return null;

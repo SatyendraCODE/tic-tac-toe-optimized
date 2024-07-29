@@ -8,6 +8,7 @@ import React from "react";
 export type SquareProps = {
   value: string;
   onSquareClick: () => void;
+  isWinner: boolean;
   xSelectedColor: string;
   oSelectedColor: string;
 };
@@ -18,6 +19,7 @@ const CLASS_NAME =
 export default function Square({
   value,
   onSquareClick,
+  isWinner,
   xSelectedColor,
   oSelectedColor,
 }: Readonly<SquareProps>) {
@@ -30,7 +32,12 @@ export default function Square({
 
   return (
     <td
-      className={`${colorVariants(value, xSelectedColor, oSelectedColor)} ...`}
+      className={`${colorVariants(
+        value,
+        xSelectedColor,
+        oSelectedColor,
+        isWinner
+      )} ...`}
     >
       <CoolMode
         options={{
@@ -53,35 +60,40 @@ export default function Square({
 function colorVariants(
   value: string,
   xSelectedColor: string,
-  oSelectedColor: string
+  oSelectedColor: string,
+  isWinner: boolean
 ) {
+  const className = isWinner
+    ? `${CLASS_NAME} animate-[wiggle_2s_ease-in-out_infinite] duration-[1000ms] border-4 border-red-500/70 dark:border-red-500/70 `
+    : CLASS_NAME;
+
   if (value) {
     if (value.toLowerCase() === "x") {
       switch (xSelectedColor) {
         case "red":
-          return `${CLASS_NAME} bg-red-600 hover:bg-red-500`;
+          return `${className} bg-red-600 hover:bg-red-500`;
         case "blue":
-          return `${CLASS_NAME} bg-blue-600 hover:bg-blue-500`;
+          return `${className} bg-blue-600 hover:bg-blue-500`;
         case "green":
-          return `${CLASS_NAME} bg-green-600 hover:bg-green-500`;
+          return `${className} bg-green-600 hover:bg-green-500`;
         case "amber":
-          return `${CLASS_NAME} bg-amber-600 hover:bg-amber-500`;
+          return `${className} bg-amber-600 hover:bg-amber-500`;
         default:
-          return `${CLASS_NAME} bg-yellow-600 hover:bg-yellow-500`;
+          return `${className} bg-yellow-600 hover:bg-yellow-500`;
       }
     } else {
       switch (oSelectedColor) {
         case "red":
-          return `${CLASS_NAME} bg-red-600 hover:bg-red-500`;
+          return `${className} bg-red-600 hover:bg-red-500`;
         case "blue":
-          return `${CLASS_NAME} bg-blue-600 hover:bg-blue-500`;
+          return `${className} bg-blue-600 hover:bg-blue-500`;
         case "green":
-          return `${CLASS_NAME} bg-green-600 hover:bg-green-500`;
+          return `${className} bg-green-600 hover:bg-green-500`;
         case "amber":
-          return `${CLASS_NAME} bg-amber-600 hover:bg-amber-500`;
+          return `${className} bg-amber-600 hover:bg-amber-500`;
         default:
-          return `${CLASS_NAME} bg-yellow-600 hover:bg-yellow-500`;
+          return `${className} bg-yellow-600 hover:bg-yellow-500`;
       }
     }
-  } else return `${CLASS_NAME} `;
+  } else return className;
 }
