@@ -8,6 +8,7 @@ import React from "react";
 export type SquareProps = {
   value: string;
   onSquareClick: () => void;
+  isWinner: boolean;
   xSelectedColor: string;
   oSelectedColor: string;
 };
@@ -18,6 +19,7 @@ const CLASS_NAME =
 export default function Square({
   value,
   onSquareClick,
+  isWinner,
   xSelectedColor,
   oSelectedColor,
 }: Readonly<SquareProps>) {

@@ -3,8 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { TIC_TAC_TOE } from "./const";
 import { ThemeProvider } from "@/components/theme-provider";
-import RetroGrid from "@/components/ui/retro-grid";
-import GridPattern from "@/components/ui/grid-pattern";
 import { DotBackground } from "@/components/ui/dot-grid-pattern";
 
 const inter = Inter({ subsets: ["latin"] });

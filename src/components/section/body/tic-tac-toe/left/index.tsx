@@ -7,12 +7,13 @@ import OTheme from "./o-theme";
 import Board from "./board";
 import BoardEffected from "./board-effected";
 import ShineBorder from "@/components/ui/shine-border";
+import { WinnerDataType } from "..";
 
 type Props = {
   xIsNext: boolean;
   squares: string[];
   onPlay: (squares: string[]) => void;
-  calculateWinner: (squares: string[]) => string | null;
+  winnerData: WinnerDataType | null;
   boardEffect: boolean;
 };
 
@@ -22,7 +23,7 @@ export default function Left({
   xIsNext,
   squares,
   onPlay,
-  calculateWinner,
+  winnerData,
   boardEffect,
 }: Readonly<Props>) {
   const [xSelectedColor, setXSelectedColor] = React.useState(
@@ -33,7 +34,7 @@ export default function Left({
   );
 
   function handleClick(i: number) {
-    if (calculateWinner(squares) || squares[i]) {
+    if (winnerData?.won || squares[i]) {
       return;
     }
     const nextSquares = squares.slice();
@@ -57,6 +58,7 @@ export default function Left({
             <BoardEffected
               xSelectedColor={xSelectedColor}
               oSelectedColor={oSelectedColor}
+              winnerSquares={winnerData?.squares}
               squares={squares}
               handleClick={handleClick}
             />
@@ -64,6 +66,7 @@ export default function Left({
             <Board
               xSelectedColor={xSelectedColor}
               oSelectedColor={oSelectedColor}
+              winnerSquares={winnerData?.squares}
               squares={squares}
               handleClick={handleClick}
             />
