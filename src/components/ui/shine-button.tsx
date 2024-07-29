@@ -36,12 +36,12 @@ const ShinyButton = ({
     <motion.p
       {...animationProps}
       className={cn(
-        "relative backdrop-blur-xl transition-[box-shadow] duration-300 ease-in-out hover:shadow dark:bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/10%)_0%,transparent_60%)] dark:hover:shadow-[0_0_20px_hsl(var(--primary)/10%)]",
+        "relative backdrop-blur-xl transition-[box-shadow] duration-300 ease-in-out hover:shadow bg-blue-600 dark:bg-blue-800 dark:bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/10%)_0%,transparent_60%)] dark:hover:shadow-[0_0_20px_hsl(var(--primary)/10%)] dark:text-white",
         className
       )}
     >
       <span
-        className="relative block h-full w-full tracking-wide text-black dark:font-light dark:text-[rgb(255,255,255,90%)]"
+        className="relative block h-full w-full tracking-wide "
         style={{
           maskImage:
             "linear-gradient(-75deg,hsl(var(--primary)) calc(var(--x) + 20%),transparent calc(var(--x) + 30%),hsl(var(--primary)) calc(var(--x) + 100%))",

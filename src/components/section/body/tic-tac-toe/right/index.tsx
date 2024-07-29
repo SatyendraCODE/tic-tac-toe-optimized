@@ -27,7 +27,11 @@ export default function Right({
       <div className={statusClassName}>{status.message}</div>
 
       <div className={movesClassName}>
-        <ol>{moves}</ol>
+        {moves.length > 1 ? (
+          <ol>{moves}</ol>
+        ) : (
+          <p className="opacity-20">All moves will be visible here!</p>
+        )}
       </div>
 
       <BoardEffectSelector boardEffectState={boardEffectState} />

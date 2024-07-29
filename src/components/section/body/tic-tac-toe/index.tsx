@@ -52,28 +52,36 @@ export default function TicTacToe() {
 
         return (
           <li key={`${move}-x-$${move}`} className="mb-1.5 ">
-            {move === currentMove ? (
-              <motion.button
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.8 }}
-                className="w-full"
-                onClick={() => jumpTo(move)}
-              >
-                <ShinyButton
-                  text={status.win ? description : `Move #${move} selected`}
-                  className="w-full h-full px-3 rounded-md shadow-md"
-                />
-              </motion.button>
-            ) : (
-              <motion.button
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.8 }}
-                className="w-full h-full border px-3 rounded-md bg-slate-200 dark:bg-gray-900 shadow-md"
-                onClick={() => jumpTo(move)}
-              >
-                {description}
-              </motion.button>
-            )}
+            {
+              <>
+                {move === currentMove ? (
+                  <motion.button
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.8 }}
+                    className="w-full"
+                    onClick={() => jumpTo(move)}
+                  >
+                    <ShinyButton
+                      text={
+                        status.win || move === 0
+                          ? description
+                          : `Move #${move} selected`
+                      }
+                      className="w-full h-full px-3 rounded-md shadow-md text-white dark:font-light dark:text-[rgb(255,255,255,90%)]"
+                    />
+                  </motion.button>
+                ) : (
+                  <motion.button
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.8 }}
+                    className="w-full h-full border px-3 rounded-md bg-neutral-100 dark:bg-gray-900 shadow-md text-neutral-700 dark:font-light dark:text-[rgb(255,255,255,90%)]"
+                    onClick={() => jumpTo(move)}
+                  >
+                    {description}
+                  </motion.button>
+                )}
+              </>
+            }
           </li>
         );
       }),

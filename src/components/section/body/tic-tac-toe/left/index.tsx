@@ -48,8 +48,9 @@ export default function Left({
   return (
     <div className="grid grid-row-2 gap-2">
       <ShineBorder
+        borderWidth={2}
         className={CARD_CLASS}
-        color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
+        color={["#A07CFE", "#FE8FB5", "#FFBE7B", "#d32525f1"]}
       >
         <table className="border-separate select-none z-10">
           {boardEffect ? (
