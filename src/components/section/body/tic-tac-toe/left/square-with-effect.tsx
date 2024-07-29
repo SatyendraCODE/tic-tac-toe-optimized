@@ -65,7 +65,9 @@ function colorVariants(
   oSelectedColor: string,
   isWinner: boolean
 ) {
-  const className = isWinner ? `${CLASS_NAME} animate-[wiggle_2s_ease-in-out_infinite] duration-[1000ms] border-4 border-red-500/70 dark:border-red-500/70 ` : CLASS_NAME;
+  const className = isWinner
+    ? `${CLASS_NAME} animate-[wiggle_2s_ease-in-out_infinite] duration-[1000ms] border-4 border-red-500/70 dark:border-red-500/70 `
+    : CLASS_NAME;
 
   if (value) {
     if (value.toLowerCase() === "x") {
@@ -74,7 +76,7 @@ function colorVariants(
           return `${className} bg-red-600 hover:bg-red-500`;
         case "blue":
           return `${className} bg-blue-600 hover:bg-blue-500`;
-          
+
         case "green":
           return `${className} bg-green-600 hover:bg-green-500`;
         case "amber":
