@@ -1,8 +1,9 @@
-import TitleHeader from "@/components/section/hearder/title";
-import TicTacToe from "@/components/section/body/tic-tac-toe";
-import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
-import { ThemeModeToggle } from "@/components/theme-mode-toggle";
 import { CARD_CLASS } from "./const";
+
+import TicTacToe from "@/components/section/body/tic-tac-toe";
+import TitleHeader from "@/components/section/hearder/title";
+import { ThemeModeToggle } from "@/components/theme-mode-toggle";
+import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 
 export default function Home() {
   return (
