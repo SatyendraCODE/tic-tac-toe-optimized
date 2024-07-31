@@ -2,16 +2,15 @@
 
 import React, { useState } from "react";
 
-import { ArrowLeft, ArrowRight, Plus } from "lucide-react";
-
 import { WinnerDataType } from "..";
+import OTheme from "../common/o-theme";
+import XTheme from "../common/x-theme";
 
 import Board from "./board";
 import BoardEffectSelector from "./board-effect-selector";
 import BoardEffected from "./board-effected";
 
 import { CARD_CLASS } from "@/app/const";
-import { Button } from "@/components/ui/button";
 import ShineBorder from "@/components/ui/shine-border";
 
 type Props = {
@@ -22,20 +21,27 @@ type Props = {
     message: string;
   };
   onPlay: (squares: string[]) => void;
-  xSelectedColor: string;
-  oSelectedColor: string;
+  xSelectedColorState: [
+    xSelectedColor: string,
+    setXSelectedColor: React.Dispatch<React.SetStateAction<string>>
+  ];
+  oSelectedColorState: [
+    oSelectedColor: string,
+    setOSelectedColor: React.Dispatch<React.SetStateAction<string>>
+  ];
 };
-
-const statusClassName = `${CARD_CLASS} text-xl font-medium`;
 
 export default function Left({
   xIsNext,
   squares,
   status,
   onPlay,
-  xSelectedColor,
-  oSelectedColor,
+  xSelectedColorState,
+  oSelectedColorState,
 }: Readonly<Props>) {
+  const [xSelectedColor, setXSelectedColor] = xSelectedColorState;
+  const [oSelectedColor, setOSelectedColor] = oSelectedColorState;
+
   const [boardEffect, setBoardEffect] = useState(false);
 
   function handleClick(i: number) {
@@ -58,7 +64,7 @@ export default function Left({
         className={CARD_CLASS}
         color={["#A07CFE", "#FE8FB5", "#FFBE7B", "#d32525f1"]}
       >
-        <table className="border-separate select-none z-10">
+        <table className="border-separate  z-10">
           {boardEffect ? (
             <BoardEffected
               xSelectedColor={xSelectedColor}
@@ -79,21 +85,17 @@ export default function Left({
         </table>
       </ShineBorder>
 
-      <div className={statusClassName}>{status.message}</div>
+      <XTheme
+        className="hidden sm:flex"
+        selectedColor={xSelectedColor}
+        onClick={(color: string) => setXSelectedColor(color)}
+      />
 
-      <div className={statusClassName}>
-        <div className="w-full flex items-center justify-center gap-3">
-          <Button variant="outline">
-            <Plus />
-          </Button>
-          <Button variant="outline">
-            <ArrowLeft />
-          </Button>
-          <Button variant="outline">
-            <ArrowRight />
-          </Button>
-        </div>
-      </div>
+      <OTheme
+        className="hidden sm:flex"
+        selectedColor={oSelectedColor}
+        onClick={(color: string) => setOSelectedColor(color)}
+      />
 
       <BoardEffectSelector setBoardEffect={setBoardEffect} />
     </div>

@@ -1,8 +1,9 @@
-import TitleHeader from "@/components/section/hearder/title";
-import TicTacToe from "@/components/section/body/tic-tac-toe";
-import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
-import { ThemeModeToggle } from "@/components/theme-mode-toggle";
 import { HEADER_CLASS } from "./const";
+
+import TicTacToe from "@/components/section/body/tic-tac-toe";
+import TitleHeader from "@/components/section/hearder/title";
+import { ThemeModeToggle } from "@/components/theme-mode-toggle";
+import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 
 export default function Home() {
   return (
@@ -15,11 +16,7 @@ export default function Home() {
         <div className="fixed bottom-0 left-0 flex w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
           <div className="flex justify-between items-center gap-6 pt-5 pb-1  lg:p-0">
             <ThemeModeToggle />
-            <a
-              className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-              href="https://github.com/SatyendraCODE"
-              target="_blank"
-            >
+            <div className=" flex place-items-center gap-2 p-8 lg:p-0">
               By,
               <AnimatedTooltip
                 item={{
@@ -29,7 +26,7 @@ export default function Home() {
                   image: "/github.png",
                 }}
               />
-            </a>
+            </div>
           </div>
         </div>
       </div>

@@ -1,11 +1,14 @@
 import React from "react";
-import { CARD_CLASS } from "@/app/const";
-import { WinnerDataType } from "..";
-import XTheme from "./x-theme";
-import OTheme from "./o-theme";
 
-const CLASS_NAME = "w-5 h-5 rounded-full";
-const movesClassName = `${CARD_CLASS} h-full`;
+import { ArrowLeft, ArrowRight, Plus, RotateCcw } from "lucide-react";
+
+import { WinnerDataType } from "..";
+import OTheme from "../common/o-theme";
+import XTheme from "../common/x-theme";
+
+import { CARD_CLASS } from "@/app/const";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type Props = {
   status: {
@@ -21,20 +24,56 @@ type Props = {
     oSelectedColor: string,
     setOSelectedColor: React.Dispatch<React.SetStateAction<string>>
   ];
+  onPlusBtnTrigger: () => void;
+  onLeftBtnTrigger: () => void;
+  onRightBtnTrigger: () => void;
 };
+
+const statusClassName = `${CARD_CLASS} text-xl font-medium`;
 
 export default function Right({
   status,
   moves,
   xSelectedColorState,
   oSelectedColorState,
+  onPlusBtnTrigger,
+  onLeftBtnTrigger,
+  onRightBtnTrigger,
 }: Readonly<Props>) {
   const [xSelectedColor, setXSelectedColor] = xSelectedColorState;
   const [oSelectedColor, setOSelectedColor] = oSelectedColorState;
 
   return (
     <div className="flex flex-col gap-2">
-      <div className={movesClassName}>
+      <div className={statusClassName}>{status.message}</div>
+
+      <div className={CARD_CLASS}>
+        <div className="w-full flex items-center justify-center gap-3">
+          <Button
+            variant="outline"
+            title="Go to previous move"
+            onClick={onLeftBtnTrigger}
+          >
+            <ArrowLeft />
+          </Button>
+          <Button
+            variant="outline"
+            title="Go to next move"
+            onClick={onRightBtnTrigger}
+          >
+            <ArrowRight />
+          </Button>
+          <Button
+            variant="outline"
+            title="Start new game"
+            onClick={onPlusBtnTrigger}
+          >
+            <RotateCcw />
+          </Button>
+        </div>
+      </div>
+
+      <div className={cn(CARD_CLASS, "h-full min-h-24")}>
         {moves.length > 1 ? (
           <ol>{moves}</ol>
         ) : (
@@ -43,41 +82,16 @@ export default function Right({
       </div>
 
       <XTheme
+        className="sm:hidden"
         selectedColor={xSelectedColor}
-        colorVariants={colorVariants}
         onClick={(color: string) => setXSelectedColor(color)}
       />
 
       <OTheme
+        className="sm:hidden"
         selectedColor={oSelectedColor}
-        colorVariants={colorVariants}
         onClick={(color: string) => setOSelectedColor(color)}
       />
     </div>
   );
-}
-
-function colorVariants(color: string, selectedColor: string) {
-  switch (color) {
-    case "red":
-      return color === selectedColor
-        ? `${CLASS_NAME} bg-red-600 hover:bg-red-500 outline outline-offset-1 outline-2 outline-blue-400/70 dark:outline-blue-500/70 `
-        : `${CLASS_NAME} bg-red-600 hover:bg-red-500 `;
-    case "blue":
-      return color === selectedColor
-        ? `${CLASS_NAME} bg-blue-600 hover:bg-blue-500 outline outline-offset-1 outline-2 outline-blue-400/70 dark:outline-blue-500/70 `
-        : `${CLASS_NAME} bg-blue-600 hover:bg-blue-500 `;
-    case "green":
-      return color === selectedColor
-        ? `${CLASS_NAME} bg-green-600 hover:bg-green-500 outline outline-offset-1 outline-2 outline-blue-400/70 dark:outline-blue-500/70 `
-        : `${CLASS_NAME} bg-green-600 hover:bg-green-500 `;
-    case "amber":
-      return color === selectedColor
-        ? `${CLASS_NAME} bg-amber-600 hover:bg-amber-500 outline outline-offset-1 outline-2 outline-blue-400/70 dark:outline-blue-500/70 `
-        : `${CLASS_NAME} bg-amber-600 hover:bg-amber-500 `;
-    default:
-      return color === selectedColor
-        ? `${CLASS_NAME} bg-yellow-600 hover:bg-yellow-500 outline outline-offset-1 outline-2 outline-blue-400/70 dark:outline-blue-500/70 `
-        : `${CLASS_NAME} bg-yellow-600 hover:bg-yellow-500 `;
-  }
 }

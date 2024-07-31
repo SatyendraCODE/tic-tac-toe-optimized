@@ -30,7 +30,7 @@ export default function ShineBorder({
   color = "#000000",
   className,
   children,
-}: ShineBorderProps) {
+}: Readonly<ShineBorderProps>) {
   return (
     <div
       style={

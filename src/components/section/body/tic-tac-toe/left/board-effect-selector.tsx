@@ -3,11 +3,13 @@ import React from "react";
 import { CARD_CLASS } from "@/app/const";
 import { Switch } from "@/components/ui/switch";
 
+type Props = {
+  setBoardEffect: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
 export default function BoardEffectSelector({
   setBoardEffect,
-}: {
-  setBoardEffect: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+}: Readonly<Props>) {
   return (
     <div className="hidden md:block">
       <div className={CARD_CLASS}>

@@ -56,7 +56,7 @@ const applyParticleEffect = (
   instanceCounter++;
 
   const defaultParticle = "circle";
-  const particleType = options?.particle || defaultParticle;
+  const particleType = options?.particle ?? defaultParticle;
   const sizes = [15, 20, 25, 35, 45];
   const limit = 45;
 
@@ -69,9 +69,9 @@ const applyParticleEffect = (
 
   function generateParticle() {
     const size =
-      options?.size || sizes[Math.floor(Math.random() * sizes.length)];
-    const speedHorz = options?.speedHorz || Math.random() * 10;
-    const speedUp = options?.speedUp || Math.random() * 25;
+      options?.size ?? sizes[Math.floor(Math.random() * sizes.length)];
+    const speedHorz = options?.speedHorz ?? Math.random() * 10;
+    const speedUp = options?.speedUp ?? Math.random() * 25;
     const spinVal = Math.random() * 360;
     const spinSpeed = Math.random() * 35 * (Math.random() <= 0.5 ? -1 : 1);
     const top = mouseY - size / 2;
