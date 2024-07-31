@@ -1,14 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { CARD_CLASS } from "@/app/const";
-import Board from "./board";
-import BoardEffected from "./board-effected";
-import ShineBorder from "@/components/ui/shine-border";
-import { WinnerDataType } from "..";
+
 import { ArrowLeft, ArrowRight, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+
+import { WinnerDataType } from "..";
+
+import Board from "./board";
 import BoardEffectSelector from "./board-effect-selector";
+import BoardEffected from "./board-effected";
+
+import { CARD_CLASS } from "@/app/const";
+import { Button } from "@/components/ui/button";
+import ShineBorder from "@/components/ui/shine-border";
 
 type Props = {
   xIsNext: boolean;

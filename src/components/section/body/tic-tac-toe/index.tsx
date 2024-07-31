@@ -1,10 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
+
 import { motion } from "framer-motion";
+
 import Left from "./left";
-import { triggerConfetti } from "@/components/ui/confetti";
 import Right from "./right";
+
+import { triggerConfetti } from "@/components/ui/confetti";
 import ShinyButton from "@/components/ui/shine-button";
 import { COLORS_VARIANTS } from "@/app/const";
 

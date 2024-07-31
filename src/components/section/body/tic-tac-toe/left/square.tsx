@@ -1,9 +1,11 @@
 "use client";
 
+import React from "react";
+
+import { motion } from "framer-motion";
+
 import { COLORS_VARIANTS_HSL } from "@/app/const";
 import { CoolMode } from "@/components/ui/base-partical";
-import { motion } from "framer-motion";
-import React from "react";
 
 export type SquareProps = {
   value: string;
