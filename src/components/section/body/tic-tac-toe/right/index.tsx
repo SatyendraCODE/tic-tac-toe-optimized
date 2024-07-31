@@ -1,7 +1,9 @@
 import React from "react";
-import BoardEffectSelector from "../left/board-effect-selector";
-import { CARD_CLASS } from "@/app/const";
+
 import { WinnerDataType } from "..";
+import BoardEffectSelector from "../left/board-effect-selector";
+
+import { CARD_CLASS } from "@/app/const";
 
 const statusClassName = `${CARD_CLASS} text-xl font-medium`;
 const movesClassName = `${CARD_CLASS} h-full`;
