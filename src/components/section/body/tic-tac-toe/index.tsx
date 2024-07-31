@@ -10,12 +10,7 @@ import Right from "./right";
 import { COLORS_VARIANTS } from "@/app/const";
 import { triggerConfetti } from "@/components/ui/confetti";
 import ShinyButton from "@/components/ui/shine-button";
-
-export type WinnerDataType = {
-  player: string;
-  won: boolean;
-  squares: number[];
-};
+import { calculateWinner } from "@/lib/calculateWinner";
 
 const INIT_HISTORY = [Array(9).fill(null)];
 const INIT_MOVE = 0;
@@ -146,28 +141,4 @@ export default function TicTacToe() {
       />
     </div>
   );
-}
-
-function calculateWinner(squares: string[]): WinnerDataType | null {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (const element of lines) {
-    const [a, b, c] = element;
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return {
-        player: squares[a],
-        won: true,
-        squares: element,
-      };
-    }
-  }
-  return null;
 }

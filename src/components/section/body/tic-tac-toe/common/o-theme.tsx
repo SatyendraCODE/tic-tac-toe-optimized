@@ -4,7 +4,7 @@ import { SquaresThemeType } from "./x-theme";
 
 import { CARD_CLASS, COLORS_VARIANTS, COLORS_VARIANTS_HSL } from "@/app/const";
 import { CoolMode } from "@/components/ui/base-partical";
-import { cn, setColorVariantsClass } from "@/lib/utils";
+import { cn, getColorVariantsClass } from "@/lib/utils";
 
 export default function OTheme({
   className,
@@ -21,7 +21,7 @@ export default function OTheme({
             options={{ color: COLORS_VARIANTS_HSL?.[color] }}
           >
             <button
-              className={setColorVariantsClass(color, selectedColor)}
+              className={getColorVariantsClass(color, selectedColor)}
               onClick={() => onClick(color)}
             />
           </CoolMode>

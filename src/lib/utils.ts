@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function setColorVariantsClass(color: string, selectedColor: string) {
+export function getColorVariantsClass(color: string, selectedColor: string) {
   const CLASS_NAME = "w-5 h-5 rounded-full";
   switch (color) {
     case "red":

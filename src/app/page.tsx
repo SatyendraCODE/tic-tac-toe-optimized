@@ -8,7 +8,7 @@ import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center space-y-5  overflow-hidden font-sans">
-      <div className="z-10 w-full max-w-5xl flex items-center justify-between lg:pt-16 lg:px-16 lg:pb-8 lg:flex">
+      <div className="z-10 w-full max-w-5xl flex items-center justify-between lg:pt-12 lg:px-16 lg:pb-8 lg:flex">
         <div className={HEADER_CLASS}>
           <TitleHeader />
         </div>
