@@ -1,11 +1,14 @@
 "use client";
 
 import React from "react";
+
 import { motion } from "framer-motion";
-import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
+
 import { SquareProps } from "./square";
-import { CoolMode } from "@/components/ui/base-partical";
+
 import { COLORS_VARIANTS_HSL } from "@/app/const";
+import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
+import { CoolMode } from "@/components/ui/base-partical";
 
 const CLASS_NAME =
   "w-20 h-20 cursor-pointer border border-gray-300 dark:border-gray-500 shadow-md rounded-lg text-white";

@@ -1,6 +1,7 @@
+import React from "react";
+
 import { CARD_CLASS, COLORS_VARIANTS, COLORS_VARIANTS_HSL } from "@/app/const";
 import { CoolMode } from "@/components/ui/base-partical";
-import React from "react";
 
 export default function XTheme({ colorVariants, onClick, selectedColor }: any) {
   return (

@@ -1,13 +1,16 @@
 "use client";
 
 import React from "react";
-import { CARD_CLASS, COLORS_VARIANTS } from "@/app/const";
-import XTheme from "./x-theme";
-import OTheme from "./o-theme";
+
+import { WinnerDataType } from "..";
+
 import Board from "./board";
 import BoardEffected from "./board-effected";
+import OTheme from "./o-theme";
+import XTheme from "./x-theme";
+
+import { CARD_CLASS, COLORS_VARIANTS } from "@/app/const";
 import ShineBorder from "@/components/ui/shine-border";
-import { WinnerDataType } from "..";
 
 type Props = {
   xIsNext: boolean;
