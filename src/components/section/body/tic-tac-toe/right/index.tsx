@@ -1,12 +1,14 @@
 import React from "react";
 
+import { ArrowLeft, ArrowRight, Plus, RotateCcw } from "lucide-react";
+
 import { WinnerDataType } from "..";
-import BoardEffectSelector from "../left/board-effect-selector";
+import OTheme from "../common/o-theme";
+import XTheme from "../common/x-theme";
 
 import { CARD_CLASS } from "@/app/const";
-
-const statusClassName = `${CARD_CLASS} text-xl font-medium`;
-const movesClassName = `${CARD_CLASS} h-full`;
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type Props = {
   status: {
@@ -14,22 +16,64 @@ type Props = {
     message: string;
   };
   moves: JSX.Element[];
-  boardEffectState: [
-    boardEffect: boolean,
-    setBoardEffect: React.Dispatch<React.SetStateAction<boolean>>
+  xSelectedColorState: [
+    xSelectedColor: string,
+    setXSelectedColor: React.Dispatch<React.SetStateAction<string>>
   ];
+  oSelectedColorState: [
+    oSelectedColor: string,
+    setOSelectedColor: React.Dispatch<React.SetStateAction<string>>
+  ];
+  onPlusBtnTrigger: () => void;
+  onLeftBtnTrigger: () => void;
+  onRightBtnTrigger: () => void;
 };
+
+const statusClassName = `${CARD_CLASS} text-xl font-medium`;
 
 export default function Right({
   status,
   moves,
-  boardEffectState,
+  xSelectedColorState,
+  oSelectedColorState,
+  onPlusBtnTrigger,
+  onLeftBtnTrigger,
+  onRightBtnTrigger,
 }: Readonly<Props>) {
+  const [xSelectedColor, setXSelectedColor] = xSelectedColorState;
+  const [oSelectedColor, setOSelectedColor] = oSelectedColorState;
+
   return (
     <div className="flex flex-col gap-2">
       <div className={statusClassName}>{status.message}</div>
 
-      <div className={movesClassName}>
+      <div className={CARD_CLASS}>
+        <div className="w-full flex items-center justify-center gap-3">
+          <Button
+            variant="outline"
+            title="Go to previous move"
+            onClick={onLeftBtnTrigger}
+          >
+            <ArrowLeft />
+          </Button>
+          <Button
+            variant="outline"
+            title="Go to next move"
+            onClick={onRightBtnTrigger}
+          >
+            <ArrowRight />
+          </Button>
+          <Button
+            variant="outline"
+            title="Start new game"
+            onClick={onPlusBtnTrigger}
+          >
+            <RotateCcw />
+          </Button>
+        </div>
+      </div>
+
+      <div className={cn(CARD_CLASS, "h-full min-h-24")}>
         {moves.length > 1 ? (
           <ol>{moves}</ol>
         ) : (
@@ -37,7 +81,17 @@ export default function Right({
         )}
       </div>
 
-      <BoardEffectSelector boardEffectState={boardEffectState} />
+      <XTheme
+        className="sm:hidden"
+        selectedColor={xSelectedColor}
+        onClick={(color: string) => setXSelectedColor(color)}
+      />
+
+      <OTheme
+        className="sm:hidden"
+        selectedColor={oSelectedColor}
+        onClick={(color: string) => setOSelectedColor(color)}
+      />
     </div>
   );
 }

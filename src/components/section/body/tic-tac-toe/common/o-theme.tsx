@@ -1,11 +1,18 @@
 import React from "react";
 
+import { SquaresThemeType } from "./x-theme";
+
 import { CARD_CLASS, COLORS_VARIANTS, COLORS_VARIANTS_HSL } from "@/app/const";
 import { CoolMode } from "@/components/ui/base-partical";
+import { cn, setColorVariantsClass } from "@/lib/utils";
 
-export default function OTheme({ colorVariants, onClick, selectedColor }: any) {
+export default function OTheme({
+  className,
+  onClick,
+  selectedColor,
+}: Readonly<SquaresThemeType>) {
   return (
-    <div className={CARD_CLASS}>
+    <div className={cn(CARD_CLASS, className)}>
       <div className="flex items-center gap-1.5">
         <p>O -</p>
         {COLORS_VARIANTS.map((color, index) => (
@@ -14,8 +21,7 @@ export default function OTheme({ colorVariants, onClick, selectedColor }: any) {
             options={{ color: COLORS_VARIANTS_HSL?.[color] }}
           >
             <button
-              key={`${color}-${index}`}
-              className={colorVariants(color, selectedColor)}
+              className={setColorVariantsClass(color, selectedColor)}
               onClick={() => onClick(color)}
             />
           </CoolMode>

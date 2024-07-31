@@ -2,8 +2,11 @@
 export const TIC_TAC_TOE = "Tic-Tac-Toe";
 
 // className
+export const HEADER_CLASS =
+  " flex w-full justify-center border-b border-gray-300 bg-gradient-to-b bg-gray-100/50 from-zinc-100/10 pb-6 pt-8 backdrop-blur-sm shadow-md dark:border-neutral-600/50 dark:bg-slate-950/40 dark:from-slate-900/60 lg:static lg:w-auto  lg:rounded-xl lg:border  lg:p-4";
+
 export const CARD_CLASS =
-  " fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b bg-gray-100/50 from-zinc-100/10 pb-6 pt-8 backdrop-blur-sm shadow-md dark:border-neutral-600/50 dark:bg-slate-950/40 dark:from-slate-900/60 lg:static lg:w-auto  lg:rounded-xl lg:border  lg:p-4";
+  " flex w-full justify-center border-b border-gray-300 bg-gradient-to-b bg-gray-100/50 from-zinc-100/10 p-4 backdrop-blur-sm shadow-md dark:border-neutral-600/50 dark:bg-slate-950/40 dark:from-slate-900/60 static w-auto  rounded-xl border  ";
 
 // values
 export const COLORS_VARIANTS = ["red", "blue", "green", "amber", "yellow"];

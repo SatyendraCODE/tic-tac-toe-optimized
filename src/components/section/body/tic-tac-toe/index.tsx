@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import Left from "./left";
 import Right from "./right";
 
+import { COLORS_VARIANTS } from "@/app/const";
 import { triggerConfetti } from "@/components/ui/confetti";
 import ShinyButton from "@/components/ui/shine-button";
 
@@ -16,10 +17,14 @@ export type WinnerDataType = {
   squares: number[];
 };
 
+const INIT_HISTORY = [Array(9).fill(null)];
+const INIT_MOVE = 0;
+
 export default function TicTacToe() {
-  const [history, setHistory] = useState([Array(9).fill(null)]);
-  const [currentMove, setCurrentMove] = useState(0);
-  const [boardEffect, setBoardEffect] = useState(false);
+  const [history, setHistory] = useState(INIT_HISTORY);
+  const [currentMove, setCurrentMove] = useState(INIT_MOVE);
+  const [xSelectedColor, setXSelectedColor] = useState(COLORS_VARIANTS[1]);
+  const [oSelectedColor, setOSelectedColor] = useState(COLORS_VARIANTS[2]);
 
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
@@ -34,6 +39,25 @@ export default function TicTacToe() {
     setCurrentMove(nextMove);
   }
 
+  function handlePlusBtnTrigger() {
+    setHistory(INIT_HISTORY);
+    setCurrentMove(INIT_MOVE);
+  }
+
+  function handleLeftBtnTrigger() {
+    if (currentMove === 0) {
+      return;
+    }
+    jumpTo(currentMove - 1);
+  }
+
+  function handleRightBtnTrigger() {
+    if (currentMove === history.length - 1) {
+      return;
+    }
+    jumpTo(currentMove + 1);
+  }
+
   const status = useMemo(() => {
     const winner = calculateWinner(currentSquares);
     let message;
@@ -42,17 +66,20 @@ export default function TicTacToe() {
       triggerConfetti();
     } else {
       message = "Next player --> " + (xIsNext ? "X" : "O");
+      if (currentMove === 9) {
+        message = "Draw";
+      }
     }
     return { winner: winner, message: message };
-  }, [currentSquares, xIsNext]);
+  }, [currentMove, currentSquares, xIsNext]);
 
   const moves = useMemo(
     () =>
-      history.map((squares, move) => {
+      history.map((_, move) => {
         let description;
 
         if (move === history.length - 1 && status.winner?.won) {
-          description = "Game over";
+          description = "Player " + status.winner?.player + " won";
         } else if (move > 0) {
           description = "Go to move #" + move;
         } else {
@@ -74,7 +101,7 @@ export default function TicTacToe() {
                       text={
                         status.winner?.won || move === 0
                           ? description
-                          : `Move #${move} selected`
+                          : `Move #${move}`
                       }
                       className="w-full h-full px-3 rounded-md shadow-md text-white dark:font-light dark:text-[rgb(255,255,255,90%)]"
                     />
@@ -94,23 +121,28 @@ export default function TicTacToe() {
           </li>
         );
       }),
-    [currentMove, history, status.winner?.won]
+    [currentMove, history, status.winner?.player, status.winner?.won]
   );
 
   return (
-    <div className="grid grid-cols-2 gap-2 ">
+    <div className="grid sm:grid-cols-2 gap-2 pb-24 lg:pb-10">
       <Left
         xIsNext={xIsNext}
         squares={currentSquares}
         onPlay={handlePlay}
-        winnerData={status.winner}
-        boardEffect={boardEffect}
+        status={status}
+        xSelectedColorState={[xSelectedColor, setXSelectedColor]}
+        oSelectedColorState={[oSelectedColor, setOSelectedColor]}
       />
 
       <Right
         status={status}
         moves={moves}
-        boardEffectState={[boardEffect, setBoardEffect]}
+        xSelectedColorState={[xSelectedColor, setXSelectedColor]}
+        oSelectedColorState={[oSelectedColor, setOSelectedColor]}
+        onPlusBtnTrigger={handlePlusBtnTrigger}
+        onLeftBtnTrigger={handleLeftBtnTrigger}
+        onRightBtnTrigger={handleRightBtnTrigger}
       />
     </div>
   );

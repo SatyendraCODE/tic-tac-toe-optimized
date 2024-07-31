@@ -7,7 +7,7 @@ import { TypewriterEffect } from "@/components/ui/typewriter-effect";
 const TitleHeader = () => {
   return (
     <TypewriterEffect
-      words={"Tic Tac Toe Game !".split(" ").map((text) => ({ text }))}
+      words={"Just Tic Tac Toe !".split(" ").map((text) => ({ text }))}
     />
   );
 };
