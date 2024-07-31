@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 
-import { WinnerDataType } from "..";
 import OTheme from "../common/o-theme";
 import XTheme from "../common/x-theme";
 
@@ -12,6 +11,7 @@ import BoardEffected from "./board-effected";
 
 import { CARD_CLASS } from "@/app/const";
 import ShineBorder from "@/components/ui/shine-border";
+import { WinnerDataType } from "@/lib/calculateWinner";
 
 type Props = {
   xIsNext: boolean;

@@ -1,13 +1,13 @@
 import React from "react";
 
-import { ArrowLeft, ArrowRight, Plus, RotateCcw } from "lucide-react";
+import { ArrowLeft, ArrowRight, RotateCcw } from "lucide-react";
 
-import { WinnerDataType } from "..";
 import OTheme from "../common/o-theme";
 import XTheme from "../common/x-theme";
 
 import { CARD_CLASS } from "@/app/const";
 import { Button } from "@/components/ui/button";
+import { WinnerDataType } from "@/lib/calculateWinner";
 import { cn } from "@/lib/utils";
 
 type Props = {

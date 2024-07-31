@@ -10,8 +10,8 @@ export default function Board({
   handleClick,
 }: any) {
   return (
-    <tbody className="flex  flex-col gap-[8px]">
-      <tr className=" flex flex-row  gap-[8px]">
+    <tbody className="flex flex-col gap-[8px]">
+      <tr className=" flex flex-row gap-[8px]">
         <Square
           xSelectedColor={xSelectedColor}
           oSelectedColor={oSelectedColor}
