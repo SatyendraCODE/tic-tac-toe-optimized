@@ -6,6 +6,7 @@ import Left from "./left";
 import { triggerConfetti } from "@/components/ui/confetti";
 import Right from "./right";
 import ShinyButton from "@/components/ui/shine-button";
+import { COLORS_VARIANTS } from "@/app/const";
 
 export type WinnerDataType = {
   player: string;
@@ -16,7 +17,8 @@ export type WinnerDataType = {
 export default function TicTacToe() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
-  const [boardEffect, setBoardEffect] = useState(false);
+  const [xSelectedColor, setXSelectedColor] = useState(COLORS_VARIANTS[1]);
+  const [oSelectedColor, setOSelectedColor] = useState(COLORS_VARIANTS[2]);
 
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
@@ -95,19 +97,21 @@ export default function TicTacToe() {
   );
 
   return (
-    <div className="grid grid-cols-2 gap-2 ">
+    <div className="grid sm:grid-cols-2 gap-2 pb-24">
       <Left
         xIsNext={xIsNext}
         squares={currentSquares}
         onPlay={handlePlay}
-        winnerData={status.winner}
-        boardEffect={boardEffect}
+        status={status}
+        xSelectedColor={xSelectedColor}
+        oSelectedColor={oSelectedColor}
       />
 
       <Right
         status={status}
         moves={moves}
-        boardEffectState={[boardEffect, setBoardEffect]}
+        xSelectedColorState={[xSelectedColor, setXSelectedColor]}
+        oSelectedColorState={[oSelectedColor, setOSelectedColor]}
       />
     </div>
   );

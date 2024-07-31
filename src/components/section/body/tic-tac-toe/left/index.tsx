@@ -1,40 +1,41 @@
 "use client";
 
-import React from "react";
-import { CARD_CLASS, COLORS_VARIANTS } from "@/app/const";
-import XTheme from "./x-theme";
-import OTheme from "./o-theme";
+import React, { useState } from "react";
+import { CARD_CLASS } from "@/app/const";
 import Board from "./board";
 import BoardEffected from "./board-effected";
 import ShineBorder from "@/components/ui/shine-border";
 import { WinnerDataType } from "..";
+import { ArrowLeft, ArrowRight, Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import BoardEffectSelector from "./board-effect-selector";
 
 type Props = {
   xIsNext: boolean;
   squares: string[];
+  status: {
+    winner: WinnerDataType | null;
+    message: string;
+  };
   onPlay: (squares: string[]) => void;
-  winnerData: WinnerDataType | null;
-  boardEffect: boolean;
+  xSelectedColor: string;
+  oSelectedColor: string;
 };
 
-const CLASS_NAME = "w-5 h-5 rounded-full";
+const statusClassName = `${CARD_CLASS} text-xl font-medium`;
 
 export default function Left({
   xIsNext,
   squares,
+  status,
   onPlay,
-  winnerData,
-  boardEffect,
+  xSelectedColor,
+  oSelectedColor,
 }: Readonly<Props>) {
-  const [xSelectedColor, setXSelectedColor] = React.useState(
-    COLORS_VARIANTS[1]
-  );
-  const [oSelectedColor, setOSelectedColor] = React.useState(
-    COLORS_VARIANTS[2]
-  );
+  const [boardEffect, setBoardEffect] = useState(false);
 
   function handleClick(i: number) {
-    if (winnerData?.won || squares[i]) {
+    if (status.winner?.won || squares[i]) {
       return;
     }
     const nextSquares = squares.slice();
@@ -58,7 +59,7 @@ export default function Left({
             <BoardEffected
               xSelectedColor={xSelectedColor}
               oSelectedColor={oSelectedColor}
-              winnerSquares={winnerData?.squares}
+              winnerSquares={status.winner?.squares}
               squares={squares}
               handleClick={handleClick}
             />
@@ -66,7 +67,7 @@ export default function Left({
             <Board
               xSelectedColor={xSelectedColor}
               oSelectedColor={oSelectedColor}
-              winnerSquares={winnerData?.squares}
+              winnerSquares={status.winner?.squares}
               squares={squares}
               handleClick={handleClick}
             />
@@ -74,42 +75,23 @@ export default function Left({
         </table>
       </ShineBorder>
 
-      <XTheme
-        selectedColor={xSelectedColor}
-        colorVariants={colorVariants}
-        onClick={(color: string) => setXSelectedColor(color)}
-      />
+      <div className={statusClassName}>{status.message}</div>
 
-      <OTheme
-        selectedColor={oSelectedColor}
-        colorVariants={colorVariants}
-        onClick={(color: string) => setOSelectedColor(color)}
-      />
+      <div className={statusClassName}>
+        <div className="w-full flex items-center justify-center gap-3">
+          <Button variant="outline">
+            <Plus />
+          </Button>
+          <Button variant="outline">
+            <ArrowLeft />
+          </Button>
+          <Button variant="outline">
+            <ArrowRight />
+          </Button>
+        </div>
+      </div>
+
+      <BoardEffectSelector setBoardEffect={setBoardEffect} />
     </div>
   );
-}
-
-function colorVariants(color: string, selectedColor: string) {
-  switch (color) {
-    case "red":
-      return color === selectedColor
-        ? `${CLASS_NAME} bg-red-600 hover:bg-red-500 outline outline-offset-1 outline-2 outline-blue-400/70 dark:outline-blue-500/70 `
-        : `${CLASS_NAME} bg-red-600 hover:bg-red-500 `;
-    case "blue":
-      return color === selectedColor
-        ? `${CLASS_NAME} bg-blue-600 hover:bg-blue-500 outline outline-offset-1 outline-2 outline-blue-400/70 dark:outline-blue-500/70 `
-        : `${CLASS_NAME} bg-blue-600 hover:bg-blue-500 `;
-    case "green":
-      return color === selectedColor
-        ? `${CLASS_NAME} bg-green-600 hover:bg-green-500 outline outline-offset-1 outline-2 outline-blue-400/70 dark:outline-blue-500/70 `
-        : `${CLASS_NAME} bg-green-600 hover:bg-green-500 `;
-    case "amber":
-      return color === selectedColor
-        ? `${CLASS_NAME} bg-amber-600 hover:bg-amber-500 outline outline-offset-1 outline-2 outline-blue-400/70 dark:outline-blue-500/70 `
-        : `${CLASS_NAME} bg-amber-600 hover:bg-amber-500 `;
-    default:
-      return color === selectedColor
-        ? `${CLASS_NAME} bg-yellow-600 hover:bg-yellow-500 outline outline-offset-1 outline-2 outline-blue-400/70 dark:outline-blue-500/70 `
-        : `${CLASS_NAME} bg-yellow-600 hover:bg-yellow-500 `;
-  }
 }
