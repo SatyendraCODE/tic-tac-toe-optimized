@@ -1,17 +1,16 @@
 "use client";
 
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { signInAnonymously } from "firebase/auth";
 import { doc, onSnapshot, setDoc } from "firebase/firestore";
 import { motion } from "framer-motion";
-import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import Left from "./left";
 import Right from "./right";
 
 import { COLORS_VARIANTS } from "@/app/const";
-import { ThemeContext } from "@/components/login-checker";
 import { triggerConfetti } from "@/components/ui/confetti";
 import ShinyButton from "@/components/ui/shine-button";
 import { calculateWinner } from "@/lib/calculateWinner";
@@ -29,17 +28,14 @@ export default function TicTacToe({
   isMultiplayerEnabled,
   id,
 }: Readonly<TicTacToeProps>) {
-  const searchParams = useSearchParams();
+  const router = useRouter();
 
-  const loginPlayerNum = searchParams.get("p");
+  const [currentUser, setCurrentUser] = useState<{
+    uid: string;
+    login: boolean;
+  } | null>(null);
 
-  const theme = useContext(ThemeContext);
-
-  // const [currentUser, setCurrentUser] = useState<{
-  //   uid: string;
-  //   login: boolean;
-  // } | null>(null);
-
+  const [loginPlayerNum, setLoginPlayerNum] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [history, setHistory] = useState(INIT_HISTORY);
   const [currentMove, setCurrentMove] = useState(INIT_MOVE);
@@ -72,7 +68,7 @@ export default function TicTacToe({
         setCurrentMove(curMove);
       };
 
-      if (isMultiplayerEnabled && id && theme?.currentUser) {
+      if (isMultiplayerEnabled && id && currentUser) {
         if (loginPlayerNum === "2" && curMove % 2 === 0) {
           doThis(id);
         }
@@ -92,7 +88,7 @@ export default function TicTacToe({
   }
 
   async function handlePlusBtnTrigger() {
-    if (isMultiplayerEnabled && id && theme?.currentUser) {
+    if (isMultiplayerEnabled && id && currentUser) {
       await setDoc(
         doc(db, "gameSessions", id),
         {
@@ -188,34 +184,29 @@ export default function TicTacToe({
   );
 
   useEffect(() => {
-    if (
-      isMultiplayerEnabled &&
-      id &&
-      !theme?.currentUser &&
-      loginPlayerNum === "1"
-    ) {
-      theme?.setGameId(id);
-      theme?.setCurrentUser({ uid: id, login: true });
-      // setCurrentUser({ uid: id, login: true });
+    const params = new URL(window.location.href).searchParams;
+    const p = params.get("p");
+
+    setLoginPlayerNum(p);
+
+    if (!p) {
+      router.push("/");
     }
 
-    if (
-      isMultiplayerEnabled &&
-      id &&
-      !theme?.currentUser &&
-      loginPlayerNum === "2"
-    ) {
+    if (isMultiplayerEnabled && id && !currentUser && p === "1") {
+      setCurrentUser({ uid: id, login: true });
+    }
+
+    if (isMultiplayerEnabled && id && !currentUser && p === "2") {
       signInAnonymously(auth).then((d) => {
         // Signed in..
-        theme?.setGameId(id);
-        theme?.setCurrentUser({ uid: d.user.uid, login: true });
-        // setCurrentUser({ uid: d.user.uid, login: true });
+        setCurrentUser({ uid: d.user.uid, login: true });
       });
     }
-  }, [id, isMultiplayerEnabled, theme?.currentUser, loginPlayerNum, theme]);
+  }, [id, isMultiplayerEnabled, currentUser, router]);
 
   useEffect(() => {
-    if (isMultiplayerEnabled && id && theme?.currentUser) {
+    if (isMultiplayerEnabled && id && currentUser) {
       const urlData = id.split("-");
 
       const docId = urlData[0];
@@ -242,17 +233,12 @@ export default function TicTacToe({
         // deleteDoc(doc(db, "gameSessions", id));
       };
     }
-  }, [id, isMultiplayerEnabled, theme?.currentUser]);
+  }, [id, isMultiplayerEnabled, currentUser]);
 
   const handleSetXSelectedColor = async (color: string) => {
     setXSelectedColor(color);
 
-    if (
-      isMultiplayerEnabled &&
-      id &&
-      theme?.currentUser &&
-      loginPlayerNum === "1"
-    ) {
+    if (isMultiplayerEnabled && id && currentUser && loginPlayerNum === "1") {
       await setDoc(
         doc(db, "gameSessions", id),
         {
@@ -266,12 +252,7 @@ export default function TicTacToe({
   const handleSetOSelectedColor = async (color: string) => {
     setOSelectedColor(color);
 
-    if (
-      isMultiplayerEnabled &&
-      id &&
-      theme?.currentUser &&
-      loginPlayerNum === "2"
-    ) {
+    if (isMultiplayerEnabled && id && currentUser && loginPlayerNum === "2") {
       await setDoc(
         doc(db, "gameSessions", id),
         {

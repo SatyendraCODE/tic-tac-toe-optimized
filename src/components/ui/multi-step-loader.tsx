@@ -111,7 +111,7 @@ const LoaderCore = ({
             transition={{ duration: 0.8 }}
           >
             <span
-              className={cn("select-text overflow-x-auto  whitespace-nowrap ")}
+              className={cn("select-text overflow-x-auto  whitespace-nowrap  scrollbar-thin")}
             >
               {player2link}
             </span>

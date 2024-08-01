@@ -4,7 +4,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { TIC_TAC_TOE } from "./const";
 
-import LoginChecker from "@/components/login-checker";
 import { ThemeProvider } from "@/components/theme-provider";
 import { DotBackground } from "@/components/ui/dot-grid-pattern";
 import { cn } from "@/lib/utils";
@@ -24,18 +23,17 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={cn(inter.className, "select-none min-h-screen font-sans")}
+        className={cn(inter.className, "select-none min-h-screen font-sans scrollbar-thumb-slate-800 scrollbar-track-slate-900 ")}
       >
-        <LoginChecker>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
-        </LoginChecker>
+    
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
         <DotBackground />
       </body>
     </html>
