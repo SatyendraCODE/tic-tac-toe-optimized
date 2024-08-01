@@ -120,7 +120,7 @@ export default function TicTacToe() {
   );
 
   return (
-    <div className="grid sm:grid-cols-2 gap-2 pb-24 lg:pb-10">
+    <div className="grid sm:grid-cols-2 gap-2 pb-16 lg:pb-10">
       <Left
         xIsNext={xIsNext}
         squares={currentSquares}
