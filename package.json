@@ -18,11 +18,14 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.0",
     "@svgr/webpack": "^8.1.0",
+    "@tabler/icons-react": "^3.11.0",
+    "@tanstack/react-query": "^5.51.16",
     "add": "^2.0.6",
     "button": "^1.1.1",
     "canvas-confetti": "^1.9.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "firebase": "^10.12.4",
     "framer-motion": "^11.3.17",
     "init": "^0.1.2",
     "lucide-react": "^0.416.0",
@@ -36,6 +39,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.51.15",
     "@types/canvas-confetti": "^1.6.4",
     "@types/node": "^20",
     "@types/react": "^18",
