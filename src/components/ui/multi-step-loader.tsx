@@ -1,6 +1,9 @@
 "use client";
 
+import { useState } from "react";
+
 import { AnimatePresence, motion } from "framer-motion";
+import { Copy, CopyCheck } from "lucide-react";
 
 import { LinkStyled } from "./link-styled";
 
@@ -54,8 +57,10 @@ const LoaderCore = ({
   player1link?: string;
   player2link?: string;
 }) => {
+  const [isCopied, setIsCopied] = useState(false);
+
   return (
-    <div className="flex relative justify-start max-w-xl mx-auto flex-col mt-40">
+    <div className="flex relative justify-start mx-auto flex-col mt-40 px-6 whitespace-normal w-full max-w-lg">
       {loadingStates.map((loadingState, index) => {
         const distance = Math.abs(index - value);
         const opacity = Math.max(1 - distance * 0.2, 0); // Minimum opacity is 0, keep it 0.2 if you're sane.
@@ -97,20 +102,38 @@ const LoaderCore = ({
       {value === 2 && (
         <>
           <motion.div
-            className={cn("z-30 text-left flex gap-2 mb-4 ", "select-all")}
-            initial={{ y: -(value * 40) }}
-            animate={{ y: -(value * 40) }}
-            transition={{ duration: 0.1 }}
+            className={cn(
+              CARD_CLASS,
+              "gap-3 z-30 text-left flex mb-4 select-all justify-between"
+            )}
+            initial={{ opacity: 0, y: -(2 * 30) }}
+            animate={{ opacity: 1, y: -(2 * 40) }}
+            transition={{ duration: 0.8 }}
           >
-            <span className={cn(CARD_CLASS, "select-all")}>{player2link}</span>
+            <span
+              className={cn("select-text overflow-x-auto  whitespace-nowrap ")}
+            >
+              {player2link}
+            </span>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(player2link ?? "");
+                setIsCopied(true);
+              }}
+            >
+              {isCopied ? <CopyCheck /> : <Copy />}
+            </button>
           </motion.div>
+
           <motion.div
-            className={cn("z-30 text-left flex gap-2 mb-4")}
-            initial={{ y: -(value * 40) }}
-            animate={{ y: -(value * 40) }}
-            transition={{ duration: 0.5 }}
+            className={cn("z-30 text-left flex gap-2 mb-4 ")}
+            initial={{ opacity: 0, y: -(2 * 30) }}
+            animate={{ opacity: 1, y: -(2 * 40) }}
+            transition={{ duration: 1 }}
           >
-            <LinkStyled href={player1link}>Join game</LinkStyled>
+            <LinkStyled href={player1link} className="rounded-lg">
+              Join the game
+            </LinkStyled>
           </motion.div>
         </>
       )}
@@ -144,9 +167,9 @@ export const MultiStepLoader = ({
           exit={{
             opacity: 0,
           }}
-          className="w-full h-full fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-2xl"
+          className="h-full fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-2xl"
         >
-          <div className="h-96  relative">
+          <div className="h-96 w-full relative">
             <LoaderCore
               value={currentState}
               loadingStates={loadingStates}

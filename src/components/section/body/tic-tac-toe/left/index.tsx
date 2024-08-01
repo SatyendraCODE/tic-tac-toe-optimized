@@ -23,12 +23,14 @@ type Props = {
   onPlay: (squares: string[]) => void;
   xSelectedColorState: [
     xSelectedColor: string,
-    setXSelectedColor: React.Dispatch<React.SetStateAction<string>>
+    handleSetXSelectedColor: (color: string) => void
   ];
   oSelectedColorState: [
     oSelectedColor: string,
-    setOSelectedColor: React.Dispatch<React.SetStateAction<string>>
+    handleSetOSelectedColor: (color: string) => void
   ];
+  loginPlayerNum: string | null;
+  isMultiplayerEnabled: boolean;
 };
 
 export default function Left({
@@ -38,9 +40,11 @@ export default function Left({
   onPlay,
   xSelectedColorState,
   oSelectedColorState,
+  loginPlayerNum,
+  isMultiplayerEnabled,
 }: Readonly<Props>) {
-  const [xSelectedColor, setXSelectedColor] = xSelectedColorState;
-  const [oSelectedColor, setOSelectedColor] = oSelectedColorState;
+  const [xSelectedColor, handleSetXSelectedColor] = xSelectedColorState;
+  const [oSelectedColor, handleSetOSelectedColor] = oSelectedColorState;
 
   const [boardEffect, setBoardEffect] = useState(false);
 
@@ -85,17 +89,41 @@ export default function Left({
         </table>
       </ShineBorder>
 
-      <XTheme
-        className="hidden sm:flex"
-        selectedColor={xSelectedColor}
-        onClick={(color: string) => setXSelectedColor(color)}
-      />
+      {isMultiplayerEnabled ? (
+        <>
+          {loginPlayerNum === "1" && (
+            <XTheme
+              className="hidden sm:flex"
+              selectedColor={xSelectedColor}
+              onClick={handleSetXSelectedColor}
+            />
+          )}
+        </>
+      ) : (
+        <XTheme
+          className="hidden sm:flex"
+          selectedColor={xSelectedColor}
+          onClick={handleSetXSelectedColor}
+        />
+      )}
 
-      <OTheme
-        className="hidden sm:flex"
-        selectedColor={oSelectedColor}
-        onClick={(color: string) => setOSelectedColor(color)}
-      />
+      {isMultiplayerEnabled ? (
+        <>
+          {loginPlayerNum === "2" && (
+            <XTheme
+              className="hidden sm:flex"
+              selectedColor={oSelectedColor}
+              onClick={handleSetOSelectedColor}
+            />
+          )}
+        </>
+      ) : (
+        <OTheme
+          className="hidden sm:flex"
+          selectedColor={oSelectedColor}
+          onClick={handleSetOSelectedColor}
+        />
+      )}
 
       <BoardEffectSelector setBoardEffect={setBoardEffect} />
     </div>

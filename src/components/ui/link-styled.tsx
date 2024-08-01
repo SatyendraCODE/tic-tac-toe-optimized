@@ -16,7 +16,6 @@ export interface ButtonProps
 
 const LinkStyled = React.forwardRef<HTMLAnchorElement, ButtonProps>(
   ({ href, className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : Link;
     return (
       <Link
         href={href || ""}

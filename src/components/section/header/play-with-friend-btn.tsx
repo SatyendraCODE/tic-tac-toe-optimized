@@ -6,10 +6,13 @@ import { usePathname } from "next/navigation";
 
 import { LinkStyled } from "@/components/ui/link-styled";
 
-export default function PlayWithFriendBtn() {
+type PlayWithFriendBtnProps = {
+  text?: string;
+};
+export default function PlayWithFriendBtn({
+  text,
+}: Readonly<PlayWithFriendBtnProps>) {
   const pathname = usePathname();
-
-  console.log("_dd pathname", pathname);
 
   if (pathname === "/multiplayer") {
     return null;
@@ -21,7 +24,7 @@ export default function PlayWithFriendBtn() {
       variant="outline"
       className="font-sans font-normal mr-5"
     >
-      Play with friends
+      {text ?? "Play with friends"}
     </LinkStyled>
   );
 }
