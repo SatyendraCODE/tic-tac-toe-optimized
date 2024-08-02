@@ -25,7 +25,7 @@ const animationProps = {
   },
 } as AnimationProps;
 interface ShinyButtonProps {
-  text: string;
+  text: string | JSX.Element;
   className?: string;
 }
 const ShinyButton = ({

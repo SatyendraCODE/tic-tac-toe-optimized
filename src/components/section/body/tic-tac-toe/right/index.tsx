@@ -18,15 +18,17 @@ type Props = {
   moves: JSX.Element[];
   xSelectedColorState: [
     xSelectedColor: string,
-    setXSelectedColor: React.Dispatch<React.SetStateAction<string>>
+    handleSetXSelectedColor: (color: string) => void
   ];
   oSelectedColorState: [
     oSelectedColor: string,
-    setOSelectedColor: React.Dispatch<React.SetStateAction<string>>
+    handleSetOSelectedColor: (color: string) => void
   ];
   onPlusBtnTrigger: () => void;
   onLeftBtnTrigger: () => void;
   onRightBtnTrigger: () => void;
+  loginPlayerNum: string | null;
+  isMultiplayerEnabled: boolean;
 };
 
 const statusClassName = `${CARD_CLASS} text-xl font-medium`;
@@ -39,9 +41,11 @@ export default function Right({
   onPlusBtnTrigger,
   onLeftBtnTrigger,
   onRightBtnTrigger,
+  loginPlayerNum,
+  isMultiplayerEnabled,
 }: Readonly<Props>) {
-  const [xSelectedColor, setXSelectedColor] = xSelectedColorState;
-  const [oSelectedColor, setOSelectedColor] = oSelectedColorState;
+  const [xSelectedColor, handleSetXSelectedColor] = xSelectedColorState;
+  const [oSelectedColor, handleSetOSelectedColor] = oSelectedColorState;
 
   return (
     <div className="flex flex-col gap-2">
@@ -81,17 +85,41 @@ export default function Right({
         )}
       </div>
 
-      <XTheme
-        className="sm:hidden"
-        selectedColor={xSelectedColor}
-        onClick={(color: string) => setXSelectedColor(color)}
-      />
+      {isMultiplayerEnabled ? (
+        <>
+          {loginPlayerNum === "1" && (
+            <XTheme
+              className="sm:hidden"
+              selectedColor={xSelectedColor}
+              onClick={handleSetXSelectedColor}
+            />
+          )}
+        </>
+      ) : (
+        <XTheme
+          className="sm:hidden"
+          selectedColor={xSelectedColor}
+          onClick={handleSetXSelectedColor}
+        />
+      )}
 
-      <OTheme
-        className="sm:hidden"
-        selectedColor={oSelectedColor}
-        onClick={(color: string) => setOSelectedColor(color)}
-      />
+      {isMultiplayerEnabled ? (
+        <>
+          {loginPlayerNum === "2" && (
+            <XTheme
+              className="sm:hidden"
+              selectedColor={oSelectedColor}
+              onClick={handleSetOSelectedColor}
+            />
+          )}
+        </>
+      ) : (
+        <OTheme
+          className="sm:hidden"
+          selectedColor={oSelectedColor}
+          onClick={handleSetOSelectedColor}
+        />
+      )}
     </div>
   );
 }

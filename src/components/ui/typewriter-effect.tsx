@@ -51,7 +51,7 @@ export const TypewriterEffect = ({
       <motion.div ref={scope} className="inline">
         {wordsArray.map((word, idx) => {
           return (
-            <div key={`word-${idx}`} className="inline-block">
+            <p key={`word-${idx}`} className="inline-block">
               {word.text.map((char, index) => (
                 <motion.span
                   initial={{}}
@@ -65,19 +65,14 @@ export const TypewriterEffect = ({
                 </motion.span>
               ))}
               &nbsp;
-            </div>
+            </p>
           );
         })}
       </motion.div>
     );
   };
   return (
-    <div
-      className={cn(
-        "sm:text-xl text-center flex items-center",
-        className
-      )}
-    >
+    <div className={cn("sm:text-xl text-center flex items-center", className)}>
       {renderWords()}
       <motion.span
         initial={{

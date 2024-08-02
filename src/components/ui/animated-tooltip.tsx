@@ -19,6 +19,7 @@ export const AnimatedTooltip = ({
     name: string;
     designation: string;
     image: string;
+    blurDataURL: string;
   };
 }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -86,6 +87,9 @@ export const AnimatedTooltip = ({
         alt={item.name}
         className="dark:invert object-cover !m-0 !p-0 object-top rounded-full h-10 w-10 border-2 group-hover:scale-105 group-hover:z-30 border-white  relative transition duration-500 "
         priority={false}
+        placeholder="blur"
+        blurDataURL={item.blurDataURL}
+        loading="lazy"
       />
     </Link>
   );

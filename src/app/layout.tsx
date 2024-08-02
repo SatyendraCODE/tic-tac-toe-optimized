@@ -22,7 +22,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn(inter.className, "select-none")}>
+      <body
+        className={cn(inter.className, "select-none min-h-screen font-sans scrollbar-thumb-slate-800 scrollbar-track-slate-900 ")}
+      >
+    
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
