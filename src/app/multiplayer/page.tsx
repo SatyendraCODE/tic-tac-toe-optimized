@@ -51,7 +51,7 @@ export default function MultiPlayerPage() {
         loading={true}
         currentState={currentState}
         player1link={`/multiplayer/${data}?p=1`}
-        player2link={`${window.location.host}/multiplayer/${data}?p=2`}
+        player2link={`https://tic-tac-toe-op.vercel.app/multiplayer/${data}?p=2`}
       />
     </div>
   );
