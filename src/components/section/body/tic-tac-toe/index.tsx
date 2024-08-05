@@ -15,6 +15,7 @@ import { triggerConfetti } from "@/components/ui/confetti";
 import ShinyButton from "@/components/ui/shine-button";
 import { calculateWinner } from "@/lib/calculateWinner";
 import { auth, db } from "@/lib/firebase-app";
+import RealTimeChat from "./real-time-chat/real-time-chat";
 
 const INIT_HISTORY = [Array(9).fill(null)];
 const INIT_MOVE = 0;
@@ -287,6 +288,8 @@ export default function TicTacToe({
         onRightBtnTrigger={handleRightBtnTrigger}
         isMultiplayerEnabled={!!isMultiplayerEnabled}
       />
+      
+      {!!isMultiplayerEnabled && <RealTimeChat />}
     </div>
   );
 }

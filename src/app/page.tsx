@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <Header  />
-      <main className="flex flex-col items-center space-y-5 mt-5 lg:mt-0 overflow-hidden ">
+      <main className="flex flex-col items-center space-y-5 mt-5 lg:mt-10 overflow-hidden ">
         <div className="flex justify-center items-center pb-10">
           <TicTacToe />
         </div>

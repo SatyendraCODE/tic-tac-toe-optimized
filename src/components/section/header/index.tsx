@@ -15,7 +15,7 @@ type HeaderProps = {
 
 export default function Header({ hidePlayWithFriend }: Readonly<HeaderProps>) {
   return (
-    <header className="z-10 w-full m-auto max-w-5xl flex items-center justify-between lg:pt-12 lg:px-16 lg:pb-8 lg:flex ">
+    <header className="z-10 w-full m-auto max-w-5xl flex items-center justify-between lg:pt-14 lg:px-16 lg:pb-8 lg:flex ">
       <Link href="/" className={HEADER_CLASS}>
         <h1 className="invisible absolute">Just Tic Tac Toe !</h1>
         <TitleHeader />
