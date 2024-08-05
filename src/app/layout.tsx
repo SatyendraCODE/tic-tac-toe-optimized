@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={cn(inter.className, "select-none min-h-screen font-sans scrollbar-thumb-slate-800 scrollbar-track-slate-900 ")}
+        className={cn(inter.className, "select-none min-h-screen font-sans dark:scrollbar-thumb-slate-800 dark:scrollbar-track-slate-900 ")}
       >
     
         <ThemeProvider

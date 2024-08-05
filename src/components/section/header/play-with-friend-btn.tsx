@@ -2,6 +2,7 @@
 
 import React from "react";
 
+import { Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { LinkStyled } from "@/components/ui/link-styled";
@@ -22,9 +23,10 @@ export default function PlayWithFriendBtn({
     <LinkStyled
       href="/multiplayer"
       variant="outline"
-      className="font-sans font-normal mr-5"
+      className="font-medium mr-5 flex justify-between gap-2"
     >
       {text ?? "Play with friends"}
+      <Users width={20} height={20} />
     </LinkStyled>
   );
 }
