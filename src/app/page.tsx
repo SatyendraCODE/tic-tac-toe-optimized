@@ -1,4 +1,3 @@
-import RealTimeChat from "@/components/section/body/tic-tac-toe/real-time-chat/real-time-chat";
 import TicTacToe from "@/components/section/body/tic-tac-toe/tic-tac-toe";
 import Header from "@/components/section/header";
 
