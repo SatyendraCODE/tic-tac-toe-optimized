@@ -23,7 +23,6 @@ export default function Layout({
         const uid = user.uid;
 
         setUser({ uid: user.uid });
-        console.log("_dd ", uid);
         // ...
       } else {
         // User is signed out

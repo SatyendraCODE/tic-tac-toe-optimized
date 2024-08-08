@@ -85,7 +85,19 @@ export default function Right({
         )}
       </div>
 
-      {isMultiplayerEnabled ? (
+      <XTheme
+        className="sm:hidden"
+        selectedColor={xSelectedColor}
+        onClick={handleSetXSelectedColor}
+      />
+
+      <OTheme
+        className="sm:hidden"
+        selectedColor={oSelectedColor}
+        onClick={handleSetOSelectedColor}
+      />
+
+      {/* {isMultiplayerEnabled ? (
         <>
           {loginPlayerNum === "1" && (
             <XTheme
@@ -106,7 +118,7 @@ export default function Right({
       {isMultiplayerEnabled ? (
         <>
           {loginPlayerNum === "2" && (
-            <XTheme
+            <OTheme
               className="sm:hidden"
               selectedColor={oSelectedColor}
               onClick={handleSetOSelectedColor}
@@ -119,7 +131,7 @@ export default function Right({
           selectedColor={oSelectedColor}
           onClick={handleSetOSelectedColor}
         />
-      )}
+      )} */}
     </div>
   );
 }

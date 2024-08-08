@@ -1,7 +1,6 @@
 import { doc, setDoc } from "firebase/firestore";
 import { Send } from "lucide-react";
-import moment from "moment";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import { useAuthStore } from "@/app/store/auth-store";
@@ -18,23 +17,13 @@ type Inputs = {
 export default function ChatInput() {
   const parmas: { id: string } = useParams();
 
-  console.log("_dd parmas", parmas);
-
   const { user } = useAuthStore();
-  const { gameMessage, setGameMessage, removeGameMessage } = useGameChatStore();
+  const { gameMessage } = useGameChatStore();
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<Inputs>();
+  const { register, handleSubmit, resetField } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (data.message.length === 0) return;
-
-    // removeGameMessage();
-    // return;
 
     if (user?.uid && parmas?.id) {
       const message: GameMessageType = {
@@ -46,13 +35,13 @@ export default function ChatInput() {
       await setDoc(
         doc(db, `gameSessions`, parmas.id),
         {
-          message: [...gameMessage, message],
+          message: [message, ...(gameMessage || [])],
         },
         { merge: true }
       )
         .then(() => {
-          // setGameMessage(message);
-          console.log("Document successfully written!");
+          // console.log("Document successfully written!");
+          resetField("message");
         })
         .catch((error) => {
           console.error("Error writing document: ", error);
@@ -68,10 +57,10 @@ export default function ChatInput() {
       <Input
         type="message"
         placeholder="Type your message..."
-        className="bg-gray-100/50 dark:bg-slate-900"
+        className="bg-white dark:bg-slate-900"
         {...register("message")}
       />
-      <Button type="submit" className="dark:bg-blue-600 dark:text-white">
+      <Button type="submit" className="bg-blue-600 dark:bg-blue-600 dark:text-white">
         <Send width={20} height={20} />
       </Button>
     </form>

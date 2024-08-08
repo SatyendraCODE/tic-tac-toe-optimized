@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { signInAnonymously } from "firebase/auth";
 import { doc, onSnapshot, setDoc } from "firebase/firestore";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
+import NoGameSessionFound from "./components/no-game-session-found";
 import Left from "./left/left";
 import RealTimeChat from "./real-time-chat/real-time-chat";
 import Right from "./right/right";
@@ -18,7 +19,7 @@ import LoaderComponent from "@/components/ui/loader-component";
 import ShinyButton from "@/components/ui/shine-button";
 import { calculateWinner } from "@/lib/calculateWinner";
 import { auth, db } from "@/lib/firebase-app";
-import NoGameSessionFound from "./components/no-game-session-found";
+import { cn } from "@/lib/utils";
 
 const INIT_HISTORY = [Array(9).fill(null)];
 const INIT_MOVE = 0;
@@ -49,8 +50,6 @@ export default function TicTacToe({
   const [currentMove, setCurrentMove] = useState(INIT_MOVE);
   const [xSelectedColor, setXSelectedColor] = useState(COLORS_VARIANTS[1]);
   const [oSelectedColor, setOSelectedColor] = useState(COLORS_VARIANTS[2]);
-
-  const constraintsRef = useRef(null);
 
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
@@ -225,11 +224,7 @@ export default function TicTacToe({
         const history = doc.data()?.history;
         const currentMove = doc.data()?.currentMove;
 
-        // console.log("_dd doc.data()?.message", doc.data()?.message);
-
         replaceGameMessage(doc.data()?.message || []);
-
-        console.log("_dd doc.exists", doc.exists());
 
         if (history) {
           setHistory(JSON.parse(history));
@@ -294,7 +289,7 @@ export default function TicTacToe({
 
   if (isMultiplayerEnabled) {
     return (
-      <div className="grid sm:grid-cols-2 gap-2 pb-16 lg:pb-10">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2 pb-16 lg:pb-10">
         {isPageLoading ? (
           <LoaderComponent className="col-span-2" />
         ) : (
@@ -336,6 +331,14 @@ export default function TicTacToe({
                   isMultiplayerEnabled={!!isMultiplayerEnabled}
                 />
 
+                <div
+                  className={cn(
+                    CARD_CLASS,
+                    "overflow-auto hidden sm:flex lg:col-span-1"
+                  )}
+                >
+                  <RealTimeChat />
+                </div>
               </>
             ) : (
               <NoGameSessionFound />

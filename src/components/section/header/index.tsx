@@ -2,6 +2,7 @@ import React from "react";
 
 import Link from "next/link";
 
+import ChatWithFriend from "./chat-with-friend";
 import PlayWithFriendBtn from "./play-with-friend-btn";
 import TitleHeader from "./title";
 
@@ -24,6 +25,7 @@ export default function Header({ hidePlayWithFriend }: Readonly<HeaderProps>) {
       <div className="z-20 fixed bottom-0 left-0 flex w-full items-center justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black  lg:static lg:size-auto lg:bg-none">
         <div className="flex justify-between items-center gap-3  mb-8 lg:mb-0 pt-5 pb-1 lg:p-0">
           {!hidePlayWithFriend && <PlayWithFriendBtn />}
+          {hidePlayWithFriend && <ChatWithFriend />}
           <ThemeModeToggle />
           <div className=" flex place-items-center gap-2 p-0">
             By,
