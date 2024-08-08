@@ -1,21 +1,24 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { signInAnonymously } from "firebase/auth";
 import { doc, onSnapshot, setDoc } from "firebase/firestore";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
-import Left from "./left";
-import Right from "./right";
+import Left from "./left/left";
+import RealTimeChat from "./real-time-chat/real-time-chat";
+import Right from "./right/right";
 
-import { COLORS_VARIANTS } from "@/app/const";
+import { CARD_CLASS, COLORS_VARIANTS } from "@/app/const";
+import { useGameChatStore } from "@/app/store/chat-store";
 import { triggerConfetti } from "@/components/ui/confetti";
+import LoaderComponent from "@/components/ui/loader-component";
 import ShinyButton from "@/components/ui/shine-button";
 import { calculateWinner } from "@/lib/calculateWinner";
 import { auth, db } from "@/lib/firebase-app";
-import RealTimeChat from "./real-time-chat/real-time-chat";
+import NoGameSessionFound from "./components/no-game-session-found";
 
 const INIT_HISTORY = [Array(9).fill(null)];
 const INIT_MOVE = 0;
@@ -31,6 +34,8 @@ export default function TicTacToe({
 }: Readonly<TicTacToeProps>) {
   const router = useRouter();
 
+  const { replaceGameMessage } = useGameChatStore();
+
   const [currentUser, setCurrentUser] = useState<{
     uid: string;
     login: boolean;
@@ -38,10 +43,14 @@ export default function TicTacToe({
 
   const [loginPlayerNum, setLoginPlayerNum] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isPageLoading, setIsPageLoading] = useState(true);
+  const [isGameSessionCreated, setIsGameSessionCreated] = useState(false);
   const [history, setHistory] = useState(INIT_HISTORY);
   const [currentMove, setCurrentMove] = useState(INIT_MOVE);
   const [xSelectedColor, setXSelectedColor] = useState(COLORS_VARIANTS[1]);
   const [oSelectedColor, setOSelectedColor] = useState(COLORS_VARIANTS[2]);
+
+  const constraintsRef = useRef(null);
 
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
@@ -215,15 +224,32 @@ export default function TicTacToe({
       const unSub = onSnapshot(doc(db, "gameSessions", docId), (doc) => {
         const history = doc.data()?.history;
         const currentMove = doc.data()?.currentMove;
-        const player1 = doc.data()?.player1;
-        const player2 = doc.data()?.player2;
+
+        // console.log("_dd doc.data()?.message", doc.data()?.message);
+
+        replaceGameMessage(doc.data()?.message || []);
+
+        console.log("_dd doc.exists", doc.exists());
 
         if (history) {
           setHistory(JSON.parse(history));
-          setCurrentMove(currentMove || 0);
-          if (player1?.color) setXSelectedColor(player1.color);
-          if (player2?.color) setOSelectedColor(player2.color);
+        } else {
+          setHistory(INIT_HISTORY);
         }
+
+        setCurrentMove(currentMove || 0);
+
+        // 1 disabled color selection because it doesn't make sense right now
+        // const player1 = doc.data()?.player1;
+        // const player2 = doc.data()?.player2;
+        // if (player1?.color) setXSelectedColor(player1.color);
+        // else setXSelectedColor(COLORS_VARIANTS[1]);
+        // if (player2?.color) setOSelectedColor(player2.color);
+        // else setOSelectedColor(COLORS_VARIANTS[2]);
+
+        setIsPageLoading(false);
+
+        setIsGameSessionCreated(true);
       });
 
       return () => {
@@ -239,30 +265,86 @@ export default function TicTacToe({
   const handleSetXSelectedColor = async (color: string) => {
     setXSelectedColor(color);
 
-    if (isMultiplayerEnabled && id && currentUser && loginPlayerNum === "1") {
-      await setDoc(
-        doc(db, "gameSessions", id),
-        {
-          player1: { uid: id, color: color },
-        },
-        { merge: true }
-      );
-    }
+    // 2 disabled color selection because it doesn't make sense right now
+    // if (isMultiplayerEnabled && id && currentUser && loginPlayerNum === "1") {
+    //   await setDoc(
+    //     doc(db, "gameSessions", id),
+    //     {
+    //       player1: { uid: id, color: color },
+    //     },
+    //     { merge: true }
+    //   );
+    // }
   };
 
   const handleSetOSelectedColor = async (color: string) => {
     setOSelectedColor(color);
 
-    if (isMultiplayerEnabled && id && currentUser && loginPlayerNum === "2") {
-      await setDoc(
-        doc(db, "gameSessions", id),
-        {
-          player2: { uid: id, color: color },
-        },
-        { merge: true }
-      );
-    }
+    // 3 disabled color selection because it doesn't make sense right now
+    // if (isMultiplayerEnabled && id && currentUser && loginPlayerNum === "2") {
+    //   await setDoc(
+    //     doc(db, "gameSessions", id),
+    //     {
+    //       player2: { uid: id, color: color },
+    //     },
+    //     { merge: true }
+    //   );
+    // }
   };
+
+  if (isMultiplayerEnabled) {
+    return (
+      <div className="grid sm:grid-cols-2 gap-2 pb-16 lg:pb-10">
+        {isPageLoading ? (
+          <LoaderComponent className="col-span-2" />
+        ) : (
+          <>
+            {isGameSessionCreated ? (
+              <>
+                <Left
+                  xIsNext={xIsNext}
+                  squares={currentSquares}
+                  onPlay={handlePlay}
+                  status={status}
+                  loginPlayerNum={loginPlayerNum}
+                  xSelectedColorState={[
+                    xSelectedColor,
+                    handleSetXSelectedColor,
+                  ]}
+                  oSelectedColorState={[
+                    oSelectedColor,
+                    handleSetOSelectedColor,
+                  ]}
+                  isMultiplayerEnabled={!!isMultiplayerEnabled}
+                />
+
+                <Right
+                  status={status}
+                  moves={moves}
+                  xSelectedColorState={[
+                    xSelectedColor,
+                    handleSetXSelectedColor,
+                  ]}
+                  oSelectedColorState={[
+                    oSelectedColor,
+                    handleSetOSelectedColor,
+                  ]}
+                  onPlusBtnTrigger={handlePlusBtnTrigger}
+                  loginPlayerNum={loginPlayerNum}
+                  onLeftBtnTrigger={handleLeftBtnTrigger}
+                  onRightBtnTrigger={handleRightBtnTrigger}
+                  isMultiplayerEnabled={!!isMultiplayerEnabled}
+                />
+
+              </>
+            ) : (
+              <NoGameSessionFound />
+            )}
+          </>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="grid sm:grid-cols-2 gap-2 pb-16 lg:pb-10">
@@ -271,10 +353,8 @@ export default function TicTacToe({
         squares={currentSquares}
         onPlay={handlePlay}
         status={status}
-        loginPlayerNum={loginPlayerNum}
         xSelectedColorState={[xSelectedColor, handleSetXSelectedColor]}
         oSelectedColorState={[oSelectedColor, handleSetOSelectedColor]}
-        isMultiplayerEnabled={!!isMultiplayerEnabled}
       />
 
       <Right
@@ -283,13 +363,9 @@ export default function TicTacToe({
         xSelectedColorState={[xSelectedColor, handleSetXSelectedColor]}
         oSelectedColorState={[oSelectedColor, handleSetOSelectedColor]}
         onPlusBtnTrigger={handlePlusBtnTrigger}
-        loginPlayerNum={loginPlayerNum}
         onLeftBtnTrigger={handleLeftBtnTrigger}
         onRightBtnTrigger={handleRightBtnTrigger}
-        isMultiplayerEnabled={!!isMultiplayerEnabled}
       />
-      
-      {!!isMultiplayerEnabled && <RealTimeChat />}
     </div>
   );
 }
