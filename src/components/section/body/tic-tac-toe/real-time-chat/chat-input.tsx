@@ -6,7 +6,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useAuthStore } from "@/app/store/auth-store";
 import { GameMessageType, useGameChatStore } from "@/app/store/chat-store";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/i-input";
+import { Input } from "@/components/ui/input";
 import { db } from "@/lib/firebase-app";
 import { getFormattedTime } from "@/lib/time";
 
