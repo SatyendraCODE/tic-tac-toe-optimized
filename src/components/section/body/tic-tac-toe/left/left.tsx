@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 
-import OTheme from "../common/o-theme";
-import XTheme from "../common/x-theme";
+import OTheme from "../components/o-theme";
+import XTheme from "../components/x-theme";
 
 import Board from "./board";
 import BoardEffectSelector from "./board-effect-selector";
@@ -29,8 +29,8 @@ type Props = {
     oSelectedColor: string,
     handleSetOSelectedColor: (color: string) => void
   ];
-  loginPlayerNum: string | null;
-  isMultiplayerEnabled: boolean;
+  loginPlayerNum?: string | null;
+  isMultiplayerEnabled?: boolean;
 };
 
 export default function Left({
@@ -89,7 +89,19 @@ export default function Left({
         </table>
       </ShineBorder>
 
-      {isMultiplayerEnabled ? (
+      <XTheme
+        className="hidden sm:flex"
+        selectedColor={xSelectedColor}
+        onClick={handleSetXSelectedColor}
+      />
+      <OTheme
+        className="hidden sm:flex"
+        selectedColor={oSelectedColor}
+        onClick={handleSetOSelectedColor}
+      />
+
+      {/* // 4 disabled color selection because it doesn't make sense right now */}
+      {/* {isMultiplayerEnabled ? (
         <>
           {loginPlayerNum === "1" && (
             <XTheme
@@ -110,7 +122,7 @@ export default function Left({
       {isMultiplayerEnabled ? (
         <>
           {loginPlayerNum === "2" && (
-            <XTheme
+            <OTheme
               className="hidden sm:flex"
               selectedColor={oSelectedColor}
               onClick={handleSetOSelectedColor}
@@ -123,7 +135,7 @@ export default function Left({
           selectedColor={oSelectedColor}
           onClick={handleSetOSelectedColor}
         />
-      )}
+      )} */}
 
       <BoardEffectSelector setBoardEffect={setBoardEffect} />
     </div>

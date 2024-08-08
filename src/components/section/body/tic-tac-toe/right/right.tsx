@@ -2,8 +2,8 @@ import React from "react";
 
 import { ArrowLeft, ArrowRight, RotateCcw } from "lucide-react";
 
-import OTheme from "../common/o-theme";
-import XTheme from "../common/x-theme";
+import OTheme from "../components/o-theme";
+import XTheme from "../components/x-theme";
 
 import { CARD_CLASS } from "@/app/const";
 import { Button } from "@/components/ui/button";
@@ -27,8 +27,8 @@ type Props = {
   onPlusBtnTrigger: () => void;
   onLeftBtnTrigger: () => void;
   onRightBtnTrigger: () => void;
-  loginPlayerNum: string | null;
-  isMultiplayerEnabled: boolean;
+  loginPlayerNum?: string | null;
+  isMultiplayerEnabled?: boolean;
 };
 
 const statusClassName = `${CARD_CLASS} text-xl font-medium`;
@@ -85,7 +85,19 @@ export default function Right({
         )}
       </div>
 
-      {isMultiplayerEnabled ? (
+      <XTheme
+        className="sm:hidden"
+        selectedColor={xSelectedColor}
+        onClick={handleSetXSelectedColor}
+      />
+
+      <OTheme
+        className="sm:hidden"
+        selectedColor={oSelectedColor}
+        onClick={handleSetOSelectedColor}
+      />
+
+      {/* {isMultiplayerEnabled ? (
         <>
           {loginPlayerNum === "1" && (
             <XTheme
@@ -106,7 +118,7 @@ export default function Right({
       {isMultiplayerEnabled ? (
         <>
           {loginPlayerNum === "2" && (
-            <XTheme
+            <OTheme
               className="sm:hidden"
               selectedColor={oSelectedColor}
               onClick={handleSetOSelectedColor}
@@ -119,7 +131,7 @@ export default function Right({
           selectedColor={oSelectedColor}
           onClick={handleSetOSelectedColor}
         />
-      )}
+      )} */}
     </div>
   );
 }
