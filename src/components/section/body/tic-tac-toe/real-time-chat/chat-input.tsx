@@ -6,7 +6,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useAuthStore } from "@/app/store/auth-store";
 import { GameMessageType, useGameChatStore } from "@/app/store/chat-store";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Input as InputUI } from "@/components/ui/input";
 import { db } from "@/lib/firebase-app";
 import { getFormattedTime } from "@/lib/time";
 
@@ -54,13 +54,16 @@ export default function ChatInput() {
       onSubmit={handleSubmit(onSubmit)}
       className="flex w-full items-center space-x-2"
     >
-      <Input
+      <InputUI
         type="message"
         placeholder="Type your message..."
         className="bg-white dark:bg-slate-900"
         {...register("message")}
       />
-      <Button type="submit" className="bg-blue-600 dark:bg-blue-600 dark:text-white">
+      <Button
+        type="submit"
+        className="bg-blue-600 dark:bg-blue-600 dark:text-white"
+      >
         <Send width={20} height={20} />
       </Button>
     </form>
