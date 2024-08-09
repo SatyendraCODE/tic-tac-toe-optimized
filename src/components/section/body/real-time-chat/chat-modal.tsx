@@ -35,7 +35,7 @@ export default function ChatModal() {
           <motion.div
             className={cn(
               CARD_CLASS,
-              "sm:max-w-[425px] h-full sm:h-auto flex flex-col gap-2 rounded-none sm:rounded-lg overflow-hidden "
+              "w-full sm:max-w-[425px] h-full sm:h-auto flex flex-col gap-2 rounded-none sm:rounded-lg overflow-hidden "
             )}
             onClick={stopEventBubbling}
             variants={container}

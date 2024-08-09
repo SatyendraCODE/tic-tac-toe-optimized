@@ -1,3 +1,7 @@
+"use client";
+
+import data from "@emoji-mart/data";
+import Picker from "@emoji-mart/react";
 import { doc, setDoc } from "firebase/firestore";
 import { Send } from "lucide-react";
 import { useParams } from "next/navigation";
@@ -60,6 +64,10 @@ export default function ChatInput() {
         className="bg-white dark:bg-slate-900"
         {...register("message")}
       />
+
+      <div className="absolute top-0 right-0 flex flex-col items-end gap-1">
+        <Picker data={data} onEmojiSelect={console.log} theme="light"/>
+      </div>
       <Button
         type="submit"
         className="bg-blue-600 dark:bg-blue-600 dark:text-white"
