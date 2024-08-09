@@ -67,3 +67,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.word-break{
+  word-break: break-word;
+}
