@@ -9,17 +9,15 @@ import { useRouter } from "next/navigation";
 
 import NoGameSessionFound from "./components/no-game-session-found";
 import Left from "./left/left";
-import RealTimeChat from "./real-time-chat/real-time-chat";
 import Right from "./right/right";
 
-import { CARD_CLASS, COLORS_VARIANTS } from "@/app/const";
+import { COLORS_VARIANTS } from "@/app/const";
 import { useGameChatStore } from "@/app/store/chat-store";
 import { triggerConfetti } from "@/components/ui/confetti";
 import LoaderComponent from "@/components/ui/loader-component";
 import ShinyButton from "@/components/ui/shine-button";
 import { calculateWinner } from "@/lib/calculateWinner";
 import { auth, db } from "@/lib/firebase-app";
-import { cn } from "@/lib/utils";
 
 const INIT_HISTORY = [Array(9).fill(null)];
 const INIT_MOVE = 0;
@@ -289,7 +287,7 @@ export default function TicTacToe({
 
   if (isMultiplayerEnabled) {
     return (
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2 pb-16 lg:pb-10">
+      <div className="grid sm:grid-cols-2 gap-2 pb-16 lg:pb-10">
         {isPageLoading ? (
           <LoaderComponent className="col-span-2" />
         ) : (
@@ -330,15 +328,6 @@ export default function TicTacToe({
                   onRightBtnTrigger={handleRightBtnTrigger}
                   isMultiplayerEnabled={!!isMultiplayerEnabled}
                 />
-
-                <div
-                  className={cn(
-                    CARD_CLASS,
-                    "overflow-auto hidden sm:flex lg:col-span-1"
-                  )}
-                >
-                  <RealTimeChat />
-                </div>
               </>
             ) : (
               <NoGameSessionFound />

@@ -1,11 +1,12 @@
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
 
 export type GameMessageType = {
   message: string;
   createdTime: string;
   createdTimeStamp: number;
   playerUid: string;
+  seen?: boolean;
+  seenTime?: string;
 };
 
 interface ChatStoreType {
