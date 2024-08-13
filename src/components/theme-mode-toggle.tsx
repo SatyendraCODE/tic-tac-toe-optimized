@@ -21,9 +21,9 @@ export function ThemeModeToggle() {
   const { theme, setTheme } = useTheme();
   const { setCustomTheme } = useThemeCustom();
 
-  const handleThemeChange = (theme: Theme) => {
-    setTheme(theme === Theme.AUTO ? "system" : theme);
-    setCustomTheme(theme);
+  const handleThemeChange = (theme: string) => {
+    setTheme(theme);
+    setCustomTheme(theme === "system" ? Theme.AUTO : theme);
   };
 
   return (
@@ -37,20 +37,24 @@ export function ThemeModeToggle() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem
-          className={cn(theme === Theme.LIGHT ? "text-blue-500 font-medium" : "")}
-          onClick={() => handleThemeChange(Theme.LIGHT)}
+          className={cn(
+            theme === Theme.LIGHT ? "text-blue-500 font-medium" : ""
+          )}
+          onClick={() => handleThemeChange("light")}
         >
           Light
         </DropdownMenuItem>
         <DropdownMenuItem
-          className={cn(theme === Theme.DARK ? "text-blue-500 font-medium" : "")}
-          onClick={() => handleThemeChange(Theme.DARK)}
+          className={cn(
+            theme === Theme.DARK ? "text-blue-500 font-medium" : ""
+          )}
+          onClick={() => handleThemeChange("dark")}
         >
           Dark
         </DropdownMenuItem>
         <DropdownMenuItem
           className={cn(theme === "system" ? "text-blue-500 font-medium" : "")}
-          onClick={() => handleThemeChange(Theme.AUTO)}
+          onClick={() => handleThemeChange("system")}
         >
           System
         </DropdownMenuItem>

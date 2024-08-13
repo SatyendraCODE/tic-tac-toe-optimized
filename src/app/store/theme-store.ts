@@ -3,8 +3,8 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 interface AuthStoreType {
-  customTheme: Theme;
-  setCustomTheme: (theme: Theme) => void;
+  customTheme: string;
+  setCustomTheme: (theme: string) => void;
 }
 
 export const useThemeCustom = create<AuthStoreType>()(
