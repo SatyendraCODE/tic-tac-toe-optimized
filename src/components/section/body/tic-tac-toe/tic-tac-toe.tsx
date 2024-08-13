@@ -1,15 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 
 import { signInAnonymously } from "firebase/auth";
 import { doc, onSnapshot, setDoc } from "firebase/firestore";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-
-import NoGameSessionFound from "./components/no-game-session-found";
-import Left from "./left/left";
-import Right from "./right/right";
 
 import { COLORS_VARIANTS } from "@/app/const";
 import { useGameChatStore } from "@/app/store/chat-store";
@@ -18,6 +14,12 @@ import LoaderComponent from "@/components/ui/loader-component";
 import ShinyButton from "@/components/ui/shine-button";
 import { calculateWinner } from "@/lib/calculateWinner";
 import { auth, db } from "@/lib/firebase-app";
+
+const NoGameSessionFound = lazy(
+  () => import("./components/no-game-session-found")
+);
+const Left = lazy(() => import("./left/left"));
+const Right = lazy(() => import("./right/right"));
 
 const INIT_HISTORY = [Array(9).fill(null)];
 const INIT_MOVE = 0;
@@ -294,43 +296,67 @@ export default function TicTacToe({
           <>
             {isGameSessionCreated ? (
               <>
-                <Left
-                  xIsNext={xIsNext}
-                  squares={currentSquares}
-                  onPlay={handlePlay}
-                  status={status}
-                  loginPlayerNum={loginPlayerNum}
-                  xSelectedColorState={[
-                    xSelectedColor,
-                    handleSetXSelectedColor,
-                  ]}
-                  oSelectedColorState={[
-                    oSelectedColor,
-                    handleSetOSelectedColor,
-                  ]}
-                  isMultiplayerEnabled={!!isMultiplayerEnabled}
-                />
+                <Suspense
+                  fallback={
+                    <div className="w-full h-full flex items-center justify-center">
+                      Loading...
+                    </div>
+                  }
+                >
+                  <Left
+                    xIsNext={xIsNext}
+                    squares={currentSquares}
+                    onPlay={handlePlay}
+                    status={status}
+                    loginPlayerNum={loginPlayerNum}
+                    xSelectedColorState={[
+                      xSelectedColor,
+                      handleSetXSelectedColor,
+                    ]}
+                    oSelectedColorState={[
+                      oSelectedColor,
+                      handleSetOSelectedColor,
+                    ]}
+                    isMultiplayerEnabled={!!isMultiplayerEnabled}
+                  />
+                </Suspense>
 
-                <Right
-                  status={status}
-                  moves={moves}
-                  xSelectedColorState={[
-                    xSelectedColor,
-                    handleSetXSelectedColor,
-                  ]}
-                  oSelectedColorState={[
-                    oSelectedColor,
-                    handleSetOSelectedColor,
-                  ]}
-                  onPlusBtnTrigger={handlePlusBtnTrigger}
-                  loginPlayerNum={loginPlayerNum}
-                  onLeftBtnTrigger={handleLeftBtnTrigger}
-                  onRightBtnTrigger={handleRightBtnTrigger}
-                  isMultiplayerEnabled={!!isMultiplayerEnabled}
-                />
+                <Suspense
+                  fallback={
+                    <div className="w-full h-full flex items-center justify-center">
+                      Loading...
+                    </div>
+                  }
+                >
+                  <Right
+                    status={status}
+                    moves={moves}
+                    xSelectedColorState={[
+                      xSelectedColor,
+                      handleSetXSelectedColor,
+                    ]}
+                    oSelectedColorState={[
+                      oSelectedColor,
+                      handleSetOSelectedColor,
+                    ]}
+                    onPlusBtnTrigger={handlePlusBtnTrigger}
+                    loginPlayerNum={loginPlayerNum}
+                    onLeftBtnTrigger={handleLeftBtnTrigger}
+                    onRightBtnTrigger={handleRightBtnTrigger}
+                    isMultiplayerEnabled={!!isMultiplayerEnabled}
+                  />
+                </Suspense>
               </>
             ) : (
-              <NoGameSessionFound />
+              <Suspense
+                fallback={
+                  <div className="w-full h-full flex items-center justify-center">
+                    Loading...
+                  </div>
+                }
+              >
+                <NoGameSessionFound />
+              </Suspense>
             )}
           </>
         )}

@@ -1,7 +1,12 @@
 import React from "react";
 
-import TicTacToe from "@/components/section/body/tic-tac-toe/tic-tac-toe";
+import dynamic from "next/dynamic";
+
 import Header from "@/components/section/header";
+
+const TicTacToe = dynamic(
+  () => import("@/components/section/body/tic-tac-toe/tic-tac-toe")
+);
 
 export default function Page({ params }: Readonly<{ params: { id: string } }>) {
   return (
