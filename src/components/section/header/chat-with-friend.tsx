@@ -27,9 +27,6 @@ export default function ChatWithFriend() {
     return gameMessage.filter((m) => m.playerUid !== user?.uid && !m.seen);
   }, [gameMessage, user?.uid]);
 
-  console.log("_dd gameMessage", gameMessage);
-  
-
   return (
     <Button
       variant={"outline"}

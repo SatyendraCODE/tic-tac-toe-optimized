@@ -29,7 +29,7 @@ export default function ChatModal() {
     <>
       {open && (
         <div
-          className="bg-black/50 absolute top-0 left-0 w-screen h-screen z-[1000] flex flex-col items-center justify-center"
+          className="bg-black/50 absolute top-0 left-0 w-screen h-screen z-[500] flex flex-col items-center justify-center"
           onClick={closeModal}
         >
           <motion.div

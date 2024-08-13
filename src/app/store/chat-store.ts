@@ -1,7 +1,15 @@
 import { create } from "zustand";
 
+export type GifMessageType = {
+  height: number;
+  width: number;
+  url: string;
+  alt: string;
+};
+
 export type GameMessageType = {
-  message: string;
+  message?: string;
+  gif?: GifMessageType;
   createdTime: string;
   createdTimeStamp: number;
   playerUid: string;

@@ -2,6 +2,7 @@
 
 import * as React from "react";
 
+import { Theme } from "gif-picker-react";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
@@ -12,10 +13,18 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
+import { useThemeCustom } from "@/app/store/theme-store";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export function ThemeModeToggle() {
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
+  const { setCustomTheme } = useThemeCustom();
+
+  const handleThemeChange = (theme: Theme) => {
+    setTheme(theme === Theme.AUTO ? "system" : theme);
+    setCustomTheme(theme);
+  };
 
   return (
     <DropdownMenu>
@@ -27,13 +36,22 @@ export function ThemeModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem
+          className={cn(theme === Theme.LIGHT ? "text-blue-500 font-medium" : "")}
+          onClick={() => handleThemeChange(Theme.LIGHT)}
+        >
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem
+          className={cn(theme === Theme.DARK ? "text-blue-500 font-medium" : "")}
+          onClick={() => handleThemeChange(Theme.DARK)}
+        >
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem
+          className={cn(theme === "system" ? "text-blue-500 font-medium" : "")}
+          onClick={() => handleThemeChange(Theme.AUTO)}
+        >
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -71,8 +71,9 @@ export default function ChatMain({ className }: { className?: string }) {
                 time={message.createdTime}
                 playerName={user?.uid === message.playerUid ? "You" : "Other"}
                 right={user?.uid === message.playerUid}
+                git={message.gif}
               >
-                {message.message}
+                {message.message && <p className="w-full">{message.message}</p>}
               </MessageParagraph>
             ))}
           </>
