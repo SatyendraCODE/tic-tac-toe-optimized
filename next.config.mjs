@@ -20,6 +20,12 @@ const nextConfig = {
         port: "",
         pathname: "/u/**",
       },
+      {
+        protocol: "https",
+        hostname: "media.tenor.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };

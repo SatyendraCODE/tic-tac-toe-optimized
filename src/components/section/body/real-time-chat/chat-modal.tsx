@@ -29,13 +29,13 @@ export default function ChatModal() {
     <>
       {open && (
         <div
-          className="bg-black/50 absolute top-0 left-0 w-screen h-screen z-[1000] flex flex-col items-center justify-center"
+          className="bg-black/50 absolute top-0 left-0 w-screen h-screen z-[500] flex flex-col items-center justify-center"
           onClick={closeModal}
         >
           <motion.div
             className={cn(
               CARD_CLASS,
-              "sm:max-w-[425px] h-full sm:h-auto flex flex-col gap-2 rounded-none sm:rounded-lg overflow-hidden "
+              "w-full sm:max-w-[425px] h-full sm:h-auto flex flex-col gap-2 rounded-none sm:rounded-lg overflow-hidden "
             )}
             onClick={stopEventBubbling}
             variants={container}

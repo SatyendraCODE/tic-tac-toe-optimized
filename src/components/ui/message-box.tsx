@@ -2,11 +2,13 @@ import * as React from "react";
 
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
+import Image from "next/image";
 
+import { GifMessageType } from "@/app/store/chat-store";
 import { cn } from "@/lib/utils";
 
 const ParagraphVariants = cva(
-  "inline-flex items-center px-4 py-2 justify-center word-break h-auto rounded-md text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ",
+  "inline-flex flex-col items-center gap-1 px-4 py-2 justify-center word-break h-auto rounded-md text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ",
   {
     variants: {
       variant: {
@@ -30,11 +32,21 @@ export interface ParagraphProps
   right?: boolean;
   time?: string;
   playerName?: string;
+  git?: GifMessageType;
 }
 
 const MessageParagraph = React.forwardRef<HTMLParagraphElement, ParagraphProps>(
   (
-    { playerName, right, time, className, variant, asChild = false, ...props },
+    {
+      playerName,
+      git,
+      right,
+      time,
+      className,
+      variant,
+      asChild = false,
+      ...props
+    },
     ref
   ) => {
     const Comp = asChild ? Slot : "p";
@@ -59,7 +71,18 @@ const MessageParagraph = React.forwardRef<HTMLParagraphElement, ParagraphProps>(
             className={cn(ParagraphVariants({ variant, className }))}
             ref={ref}
             {...props}
-          />
+          >
+            {git && (
+              <Image
+                src={git.url}
+                alt={git.alt || "gif image"}
+                title={git.alt || "gif image"}
+                width={git.width}
+                height={git.height}
+              />
+            )}
+            {props.children}
+          </Comp>
         </div>
       </div>
     );
