@@ -5,7 +5,7 @@ import { useState } from "react";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import { doc, setDoc } from "firebase/firestore";
-import GifPicker from "gif-picker-react";
+import GifPicker, { Theme } from "gif-picker-react";
 import { Send, Smile } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -132,7 +132,7 @@ export default function ChatInput() {
             <PopoverContent className="z-[501] w-full border-none p-0 bg-none ">
               <GifPicker
                 tenorApiKey={process.env.NEXT_PUBLIC_REACT_APP_TENO_KEY || ""}
-                theme={customTheme}
+                theme={customTheme as Theme}
                 {...register("gif")}
                 onGifClick={(gif) => {
                   setValue("gif", { ...gif.preview, alt: gif.description });

@@ -12,6 +12,7 @@ import { useGameChatStore } from "@/app/store/chat-store";
 import { triggerConfetti } from "@/components/ui/confetti";
 import LoaderComponent from "@/components/ui/loader-component";
 import ShinyButton from "@/components/ui/shine-button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { calculateWinner } from "@/lib/calculateWinner";
 import { auth, db } from "@/lib/firebase-app";
 
@@ -298,8 +299,10 @@ export default function TicTacToe({
               <>
                 <Suspense
                   fallback={
-                    <div className="w-full h-full flex items-center justify-center">
-                      Loading...
+                    <div className="flex flex-col gap-2">
+                      <Skeleton className="w-[300px] h-[300px] flex items-center justify-center" />
+                      <Skeleton className="w-[300px] h-[30px] rounded-lg" />
+                      <Skeleton className="w-[300px] h-[30px] rounded-lg" />
                     </div>
                   }
                 >
@@ -323,8 +326,10 @@ export default function TicTacToe({
 
                 <Suspense
                   fallback={
-                    <div className="w-full h-full flex items-center justify-center">
-                      Loading...
+                    <div className="flex flex-col gap-2">
+                      <Skeleton className="w-[300px] h-[300px] flex items-center justify-center" />
+                      <Skeleton className="w-[300px] h-[30px] rounded-lg" />
+                      <Skeleton className="w-[300px] h-[30px] rounded-lg" />
                     </div>
                   }
                 >
