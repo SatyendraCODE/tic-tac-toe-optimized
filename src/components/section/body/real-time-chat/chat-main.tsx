@@ -55,7 +55,7 @@ export default function ChatMain({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "h-full sm:max-h-[450px]  sm:min-h-[450px] w-full flex flex-col gap-3 select-text",
+        "h-full sm:max-h-[80vh]  sm:min-h-[450px] w-full flex flex-col gap-3 select-text",
         className
       )}
     >
