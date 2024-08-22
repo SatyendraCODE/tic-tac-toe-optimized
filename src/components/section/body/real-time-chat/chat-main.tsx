@@ -7,12 +7,12 @@ import { useParams } from "next/navigation";
 
 import ChatInput from "./chat-input";
 
-import { useAuthStore } from "@/app/store/auth-store";
-import { useGameChatStore } from "@/app/store/chat-store";
 import { MessageParagraph } from "@/components/ui/message-box";
 import { db } from "@/lib/firebase-app";
 import { getFormattedTime } from "@/lib/time";
 import { cn } from "@/lib/utils";
+import { useAuthStore } from "@/store/auth-store";
+import { useGameChatStore } from "@/store/chat-store";
 
 export default function ChatMain({ className }: { className?: string }) {
   const parmas: { id: string } = useParams();

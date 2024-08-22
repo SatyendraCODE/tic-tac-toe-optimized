@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
-import { useThemeCustom } from "@/app/store/theme-store";
+import { useThemeCustom } from "@/store/theme-store";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 

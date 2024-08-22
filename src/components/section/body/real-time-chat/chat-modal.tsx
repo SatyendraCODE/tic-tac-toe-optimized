@@ -8,8 +8,8 @@ import { X } from "lucide-react";
 import RealTimeChat from "./real-time-chat";
 
 import { CARD_CLASS } from "@/app/const";
-import { useChatModalStore } from "@/app/store/chat-modal-store";
 import { cn } from "@/lib/utils";
+import { useChatModalStore } from "@/store/chat-modal-store";
 
 const container = {
   hidden: { opacity: 1, scale: 0 },

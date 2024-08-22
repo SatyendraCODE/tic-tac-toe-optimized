@@ -8,13 +8,13 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
 import { COLORS_VARIANTS } from "@/app/const";
-import { useGameChatStore } from "@/app/store/chat-store";
 import { triggerConfetti } from "@/components/ui/confetti";
 import LoaderComponent from "@/components/ui/loader-component";
 import ShinyButton from "@/components/ui/shine-button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { calculateWinner } from "@/lib/calculateWinner";
 import { auth, db } from "@/lib/firebase-app";
+import { useGameChatStore } from "@/store/chat-store";
 
 const NoGameSessionFound = lazy(
   () => import("./components/no-game-session-found")

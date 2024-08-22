@@ -11,13 +11,6 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useForm, SubmitHandler, set } from "react-hook-form";
 
-import { useAuthStore } from "@/app/store/auth-store";
-import {
-  GameMessageType,
-  GifMessageType,
-  useGameChatStore,
-} from "@/app/store/chat-store";
-import { useThemeCustom } from "@/app/store/theme-store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -27,6 +20,13 @@ import {
 } from "@/components/ui/popover";
 import { db } from "@/lib/firebase-app";
 import { getFormattedTime } from "@/lib/time";
+import { useAuthStore } from "@/store/auth-store";
+import {
+  GameMessageType,
+  GifMessageType,
+  useGameChatStore,
+} from "@/store/chat-store";
+import { useThemeCustom } from "@/store/theme-store";
 
 type Inputs = {
   message: string;

@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-import { useAuthStore } from "../store/auth-store";
+import { useAuthStore } from "../../store/auth-store";
 
 const queryClient = new QueryClient();
 

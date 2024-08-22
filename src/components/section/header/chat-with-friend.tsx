@@ -5,10 +5,10 @@ import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 
-import { useAuthStore } from "@/app/store/auth-store";
-import { useChatModalStore } from "@/app/store/chat-modal-store";
-import { useGameChatStore } from "@/app/store/chat-store";
 import { Button } from "@/components/ui/button";
+import { useAuthStore } from "@/store/auth-store";
+import { useChatModalStore } from "@/store/chat-modal-store";
+import { useGameChatStore } from "@/store/chat-store";
 
 const container = {
   hidden: { opacity: 0, scale: 0 },

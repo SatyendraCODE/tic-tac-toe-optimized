@@ -4,8 +4,8 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import Image from "next/image";
 
-import { GifMessageType } from "@/app/store/chat-store";
 import { cn } from "@/lib/utils";
+import { GifMessageType } from "@/store/chat-store";
 
 const ParagraphVariants = cva(
   "inline-flex flex-col items-center gap-1 px-4 py-2 justify-center word-break h-auto rounded-md text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ",
